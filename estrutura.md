@@ -27,11 +27,11 @@ Os wireframes, conforme especificado na descrição do desafio, ilustram funcion
 ### level (enum)
 Informa qual o tipo ou type do log e.g. [error, warning ,debug, etc]
 
-### origem (enum)
-Informa qual serviço, server, api, etc de onde veio o log e.g. [127.0.0.1, app1.server.com, service1.server.com, etc]
-
 ### ambiente (enum)
 Qual ambiente está sendo utilizado [producao, homologação, desenvolvimento]
+
+### origem
+Informa qual serviço, server, api, etc de onde veio o log e.g. [127.0.0.1, app1.server.com, service1.server.com, etc]
 
 ### log/hash
 O que determina as ocorrências ou eventos é uma implementação do método hash java a ser computado, e.g. md5(logs->log + level + origem + ambiente)
