@@ -7,11 +7,11 @@ Os wireframes, conforme especificado na descrição do desafio, ilustram funcion
 
 ## Entidades
 
-| usuario   | level     | origem    | ambiente  |
-|-----------|-----------|-----------|-----------|
-| email     | descricao | descricao | descricao |
-| token     |           |           |           |
-| nome      |           |           |           |
+| usuario   |
+|-----------|
+| email     |
+| token     |
+| nome      |
 
 | logs        | event_log   | 
 |-------------|-------------|
@@ -23,14 +23,17 @@ Os wireframes, conforme especificado na descrição do desafio, ilustram funcion
 | origem      |             |
 | level       |             |
 | usuario     |             |
+| level       |             |
+| origem      |             |
+| ambiente    |             |
 
-### level
+### level (enum)
 Informa qual o tipo ou type do log e.g. [error, warning ,debug, etc]
 
-### origem
+### origem (enum)
 Informa qual serviço, server, api, etc de onde veio o log e.g. [127.0.0.1, app1.server.com, service1.server.com, etc]
 
-### ambiente
+### ambiente (enum)
 Qual ambiente está sendo utilizado [producao, homologação, desenvolvimento]
 
 ### log/hash
