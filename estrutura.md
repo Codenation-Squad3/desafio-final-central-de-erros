@@ -23,9 +23,6 @@ Os wireframes, conforme especificado na descrição do desafio, ilustram funcion
 | origem      |             |
 | level       |             |
 | usuario     |             |
-| level       |             |
-| origem      |             |
-| ambiente    |             |
 
 ### level (enum)
 Informa qual o tipo ou type do log e.g. [error, warning ,debug, etc]
