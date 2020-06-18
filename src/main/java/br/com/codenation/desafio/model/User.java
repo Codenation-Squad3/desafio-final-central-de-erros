@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Validated
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "user_challenge")
+@Entity(name = "log_user")
 public class User {
 	
     @Id
@@ -37,19 +37,19 @@ public class User {
 	
     @NotNull
     @Size(min = 3, max = 120)
-	private String nome;
+    private String nome;
 	
     @NotNull
     @Email
     @Column(unique = true)
     @Size(min = 5, max = 60)
-	private String email;
+    private String email;
 	
     @NotNull
     @Size(min = 6, max = 20)
-	private String password;
+    private String password;
 	
-	private String token;
+    private String token;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<Log> logs;
