@@ -4,9 +4,10 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.codenation.desafio.model.Ocurrency;
+import br.com.codenation.desafio.model.Ocurrence;
+
 
 @Repository
-public interface OcurrenceRepository extends JpaRepository<Ocurrency, UUID> {
+public interface OcurrenceRepository extends JpaRepository<Ocurrence, UUID> {
 
 }
