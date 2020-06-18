@@ -3,8 +3,8 @@ package br.com.codenation.desafio.enums;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @Getter
+@NoArgsConstructor
 public enum Environment {
 
 	PRODUCTION("Produção"),

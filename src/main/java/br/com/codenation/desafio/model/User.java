@@ -52,6 +52,6 @@ public class User {
 	private String token;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	private List<Logs> logs;
+	private List<Log> logs;
 	
 }
