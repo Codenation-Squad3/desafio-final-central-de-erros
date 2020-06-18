@@ -21,7 +21,7 @@ import java.util.UUID;
 @Validated
 @NoArgsConstructor
 @AllArgsConstructor
-public class Occurrence {
+public class Ocurrence {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -33,7 +33,7 @@ public class Occurrence {
 
     @Column
     @NotNull
-    private LocalDateTime timestamp;
+    private LocalDateTime dtCreated;
 
     @NotNull
     @Enumerated(EnumType.STRING)
