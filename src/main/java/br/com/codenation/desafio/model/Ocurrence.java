@@ -16,11 +16,11 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-@Entity
 @Builder
 @Validated
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity(name = "log_ocurrence")
 public class Ocurrence {
 
     @Id

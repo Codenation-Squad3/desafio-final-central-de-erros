@@ -54,10 +54,12 @@ public class Log {
 	
     @Column
     @NotNull
+    @CompoundPk
     private String origin;
 
     @Column
     @NotNull
+    @CompoundPk
     private String description;
 
     @Column
