@@ -1,10 +1,12 @@
 package br.com.codenation.desafio.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,6 +16,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.validation.annotation.Validated;
 
 import lombok.AllArgsConstructor;
@@ -28,6 +32,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "log_user")
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 	
     @Id
@@ -53,5 +58,8 @@ public class User {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<Log> logs;
+	
+	@CreatedDate
+	private LocalDateTime createdAt;
 	
 }

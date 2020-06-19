@@ -47,16 +47,11 @@ public class LogRepositoryTest {
 		assertThat(myOcurrence.isPresent()).isTrue();
 	}
 	
-	
-	
-	
-	
-	
 	private Log createLog() {
 		Log log = Log.builder()
 				.description("some error with stack trace line 1234")
 				.origin("in 127.0.0.1 some app")
-				.lastOcurrence(LocalDateTime.now())
+				.lastOccurrence(LocalDateTime.now())
 				.build();
 		return logRepository.save(log);
 	}
@@ -71,6 +66,7 @@ public class LogRepositoryTest {
 	}
 	
 	private Ocurrence createOcurrence(Log log, User user) {
+		
 		Ocurrence Ocurrence = Ocurrence.builder()
 				.environment(Environment.TEST)
 				.level(Level.DEBUG)
