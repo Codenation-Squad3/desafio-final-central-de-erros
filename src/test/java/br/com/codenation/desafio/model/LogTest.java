@@ -55,10 +55,7 @@ public class LogTest {
 				.description("NullPointer Exception")
 				.title("t")
 				.description("description description")
-				.datetime(LocalDateTime.now())
-				.environment(Environment.TEST)
-				.source("source error: service api 127.0.0.1:8080")
-				.level(Level.DEBUG)
+				.lastOccurrence(LocalDateTime.now())
 				.user(user)
 				.build();
 
@@ -79,10 +76,7 @@ public class LogTest {
 		Log log = Log.builder()
 				.title("some error in test environment")
 				.description("s")
-				.datetime(LocalDateTime.now())
-				.environment(Environment.TEST)
-				.source("service api 127.0.0.1:8080")
-				.level(Level.DEBUG)
+				.lastOccurrence(LocalDateTime.now())
 				.user(user)
 				.build();
 
@@ -103,51 +97,12 @@ public class LogTest {
 		Log log = Log.builder()
 				.title("some error in test environment")
 				.description("description of the error stack trace")
-				.datetime(null)
-				.environment(Environment.TEST)
-				.source("service api 127.0.0.1:8080")
-				.level(Level.DEBUG)
-				.user(user)
-				.build();
-
-		Set<ConstraintViolation<Log>> constraintViolations = validator
-				.validate(log);
-
-		assertEquals(1, constraintViolations.size());
-	}
-
-	@Test
-	public void logOriginIsNotValid() {
-		User user = User.builder()
-				.email("jonh.doe@gmail.com")
-				.nome("Jonh Doe")
-				.password("123456")
-				.build();
-
-		Log log = Log.builder()
-				.title("some error in test environment")
 				.lastOccurrence(LocalDateTime.now())
-				.description("some description error")
-				.origin(null)
 				.user(user)
 				.build();
 
 		Set<ConstraintViolation<Log>> constraintViolations = validator
 				.validate(log);
-
-		assertEquals(1, constraintViolations.size());
-
-		Log log = Log.builder()
-				.title("some error in test environment")
-				.description("description of the error stack trace")
-				.datetime(LocalDateTime.now())
-				.environment(null)
-				.source("service api 127.0.0.1:8080")
-				.level(Level.DEBUG)
-				.user(user)
-				.build();
-
-		constraintViolations = validator.validate(log);
 
 		assertEquals(1, constraintViolations.size());
 	}
@@ -162,14 +117,10 @@ public class LogTest {
 
 		Log log = Log.builder()
 				.title("some error in test environment")
-				.lastOccurrence(null)
 				.description("some description error")
 				.origin("128.168.0.3")
 				.description("description of the error stack trace")
-				.datetime(LocalDateTime.now())
-				.environment(Environment.TEST)
-				.source("s")
-				.level(Level.DEBUG)
+				.lastOccurrence(null)
 				.user(user)
 				.build();
 
@@ -193,15 +144,6 @@ public class LogTest {
 				.lastOccurrence(LocalDateTime.now())
 				.description(null)
 				.origin("128.168.0.3")
-				.build();
-
-				Log log = Log.builder()
-				.title("some error in test environment")
-				.description("description of the error stack trace")
-				.datetime(LocalDateTime.now())
-				.environment(Environment.TEST)
-				.source("service api 127.0.0.1:8080")
-				.level(null)
 				.user(user)
 				.build();
 
@@ -211,36 +153,23 @@ public class LogTest {
 		assertEquals(1, constraintViolations.size());
 	}
 
-	/*
-	 * @Test public void logLUserIsNotValid() { Log log = Log.builder()
-	 * .title("some error in test environment") .lastOccurrence(LocalDateTime.now())
-	 * .description("some description error") .origin("128.168.0.3") .build();
-	 * 
-	 * Set<ConstraintViolation<Log>> constraintViolations = validator
-	 * .validate(log);
-	 * 
-	 * assertEquals(1, constraintViolations.size());
-	 * 
-	 * }
-	 */
-
 	@Test
-	public void logLUserIsNotValid() {	
+	public void logUserIsNotValid() {	
 		
 		Log log = Log.builder()
 				.title("some error in test environment")
 				.description("description of the error stack trace")
-				.datetime(LocalDateTime.now())
-				.environment(Environment.TEST)
-				.source("service api 127.0.0.1:8080")
-				.level(Level.DEBUG)
+				.lastOccurrence(LocalDateTime.now())
+				.origin("128.168.0.3")
 				.user(null)
 				.build();
 
 		Set<ConstraintViolation<Log>> constraintViolations = validator
 				.validate(log);
 
+		//constraintViolations.forEach(
+		//		cv -> System.out.println(cv.getPropertyPath() + " " + cv.getMessage()));
+		
 		assertEquals(1, constraintViolations.size());
-
 	}
 }

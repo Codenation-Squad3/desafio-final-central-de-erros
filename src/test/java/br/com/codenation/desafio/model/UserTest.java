@@ -2,6 +2,7 @@ package br.com.codenation.desafio.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -26,6 +27,7 @@ public class UserTest {
 	@Test
 	public void userEmailNomePasswordIsNull() {
 		User user = User.builder()
+				.createdAt(LocalDateTime.now())
 				.build();
 		
         Set<ConstraintViolation<User>> constraintViolations = validator
@@ -40,6 +42,7 @@ public class UserTest {
 				.email("aabbbcc")
 				.nome("John Doe")
 				.password("123456")
+				.createdAt(LocalDateTime.now())
 				.build();
 		
         Set<ConstraintViolation<User>> constraintViolations = validator
@@ -54,6 +57,7 @@ public class UserTest {
 				.email("john.doe@gmail.com")
 				.nome("John Doe")
 				.password("123456")
+				.createdAt(LocalDateTime.now())
 				.build();
 		
         Set<ConstraintViolation<User>> constraintViolations = validator
@@ -68,6 +72,7 @@ public class UserTest {
 				.email("john.doe@gmail.com")
 				.nome("Jo")
 				.password("123456")
+				.createdAt(LocalDateTime.now())
 				.build();
 		
         Set<ConstraintViolation<User>> constraintViolations = validator
@@ -86,6 +91,7 @@ public class UserTest {
 				.email("john.doe@gmail.com")
 				.nome("John Doe")
 				.password("12345")
+				.createdAt(LocalDateTime.now())
 				.build();
 		
         Set<ConstraintViolation<User>> constraintViolations = validator
@@ -104,6 +110,7 @@ public class UserTest {
 				.email("john.doe@gmail.com")
 				.nome("John Doe")
 				.password("123456")
+				.createdAt(LocalDateTime.now())
 				.build();
 		
         Set<ConstraintViolation<User>> constraintViolations = validator
