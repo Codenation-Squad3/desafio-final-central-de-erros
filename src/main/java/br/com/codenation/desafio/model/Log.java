@@ -9,9 +9,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.validation.annotation.Validated;
@@ -42,14 +43,11 @@ public class Log {
                             value = "CompoundPk")})
     private String id;
 
-	// ?? use title ??
-	/*
     @Column
     @NotNull
     @CompoundPk
     @Size(min = 3, max = 255)
     private String title;
-	*/
 	
     @Column
     @NotNull
@@ -69,6 +67,6 @@ public class Log {
     private List<Ocurrence> occurrences;
 
     @NotNull
-    @ManyToOne
+    @OneToOne
     private User user;
 }

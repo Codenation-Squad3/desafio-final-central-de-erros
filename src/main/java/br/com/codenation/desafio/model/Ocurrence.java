@@ -47,4 +47,8 @@ public class Ocurrence {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @NotNull
+    @OneToOne
+    private User user;
+    
 }

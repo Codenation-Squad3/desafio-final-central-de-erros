@@ -59,6 +59,7 @@ public class User {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<Log> logs;
 	
+	@NotNull
 	@CreatedDate
 	private LocalDateTime createdAt;
 	
