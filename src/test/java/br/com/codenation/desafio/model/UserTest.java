@@ -86,25 +86,6 @@ public class UserTest {
 	}
 	
 	@Test
-	public void userPasswordIsNotValid() {
-		User user = User.builder()
-				.email("john.doe@gmail.com")
-				.nome("John Doe")
-				.password("12345")
-				.createdAt(LocalDateTime.now())
-				.build();
-		
-        Set<ConstraintViolation<User>> constraintViolations = validator
-        		.validate(user);
-        
-        assertEquals(1, constraintViolations.size());
-        
-        constraintViolations.forEach(
-        		cv -> System.out.println(cv.getPropertyPath() + " " + cv.getMessage())
-        		);
-	}
-	
-	@Test
 	public void userIsValid() {
 		User user = User.builder()
 				.email("john.doe@gmail.com")
