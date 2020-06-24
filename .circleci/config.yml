@@ -8,7 +8,9 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/openjdk:8-jdk
-      - image: circleci/postgres:9.4
+      - image: circleci/postgres:9.6.5-alpine-ram
+          environment:
+              POSTGRE_USER: postgres
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -29,7 +31,7 @@ jobs:
       - checkout
 
       - run: sudo apt-get update
-      - run: sudo apt-get install postgresql-client-9.4
+      - run: sudo apt-get install postgresql-client-9.6
       - run:
           command: |
               psql -h localhost -U postgres -c "CREATE DATABASE squad3;"
