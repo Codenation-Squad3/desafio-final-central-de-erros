@@ -31,8 +31,8 @@ jobs:
       - run: sudo apt-get update
       - run: sudo apt-get install postgresql-client-9.4
       - run:
-        command: |
-          psql -h localhost -U postgres -c "CREATE DATABASE squad3;"
+          command: |
+              psql -h localhost -U postgres -c "CREATE DATABASE squad3;"
 
       # Download and cache dependencies
       - restore_cache:
