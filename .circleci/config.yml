@@ -10,7 +10,7 @@ jobs:
       - image: circleci/openjdk:8-jdk
       - image: circleci/postgres:9.6.5-alpine-ram
           environment:
-              POSTGRE_USER: postgres
+              POSTGRES_USER: postgres
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
