@@ -27,7 +27,7 @@ jobs:
 
     steps:
       - checkout
-
+      
       - run: sudo apt-get update
       - run: sudo apt-get install postgresql-client
       - run:
@@ -36,17 +36,21 @@ jobs:
 
       # Download and cache dependencies
       - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "build.gradle" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+          key: squad3-challenge-{{ checksum "pom.xml" }}
 
-      - run: gradle dependencies
+      - run: mvn dependency:go-offline
 
       - save_cache:
           paths:
-            - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}
+            - ~/.m2
+          key: squad3-challenge-{{ checksum "pom.xml" }}
+          
+      - run: mvn package
 
-      # run tests!
-      - run: gradle test
+      - store_test_results: # uploads the test metadata from the `target/surefire-reports` directory so that it can show up in the CircleCI dashboard. 
+      # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: target/surefire-reports
+      
+      - store_artifacts: # store the uberjar as an artifact
+      # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          path: target/squad3-challenge-0.1-SNAPSHOT.jar
