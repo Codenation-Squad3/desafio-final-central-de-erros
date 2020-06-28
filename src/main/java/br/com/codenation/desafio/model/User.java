@@ -51,7 +51,6 @@ public class User {
     private String email;
 	
     @NotNull
-    @Size(min = 6, max = 20)
     private String password;
 	
     private String token;
