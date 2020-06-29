@@ -3,8 +3,6 @@
 
 name: My Super CI
 on:
-  push:
-    branches: [master]
   pull_request:
     branches: [ master ]
 jobs:
@@ -19,10 +17,10 @@ jobs:
         postgresql db: ${{ secrets.DATASOURCE_DB }}
         postgresql user: ${{ secrets.DATASOURCE_USERNAME }}
         postgresql password: ${{ secrets.DATASOURCE_PASSWORD }}
-    - name: Set up JDK 11
+    - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
-        java-version: 11
+        java-version: 1.8
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
