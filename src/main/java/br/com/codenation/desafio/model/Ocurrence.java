@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
@@ -16,11 +17,12 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
+@Entity
 @Builder
 @Validated
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "log_ocurrence")
+@Table(name = "log_ocurrence")
 public class Ocurrence {
 
     @Id
@@ -31,8 +33,9 @@ public class Ocurrence {
     @ManyToOne
     private Log log;
 
-    @Column
-    @NotNull
+	@NotNull
+	@CreatedDate
+	@Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime dtCreated;
 
     @NotNull
