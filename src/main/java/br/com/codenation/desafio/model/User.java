@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,11 +28,12 @@ import lombok.NoArgsConstructor;
 
 
 @Data
+@Entity
 @Builder
 @Validated
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "log_user")
+@Table(name="users")
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 	
@@ -56,6 +58,7 @@ public class User {
     private String token;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @Column(name ="user_id")
 	private List<Log> logs;
 	
 	@NotNull

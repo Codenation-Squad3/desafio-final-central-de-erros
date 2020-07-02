@@ -4,13 +4,19 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.codenation.desafio.model.User;
 import br.com.codenation.desafio.repository.UserRepository;
 import br.com.codenation.desafio.service.interfaces.UserServiceInterface;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
-@Service("user")
+@Service
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserService implements UserServiceInterface {
 
 	@Autowired
@@ -25,10 +31,13 @@ public class UserService implements UserServiceInterface {
 	public Optional<User> findById(UUID id) {
     	return this.userRepository.findById(id);
 	}
-
 	
+    public Page<User> buscarTodos(Pageable pageable) {
+        return this.userRepository.findAll(pageable);
+    }
 
-
-
-
+	@Override
+	public Optional<User> findByEmail(String email) {
+		return this.userRepository.findByEmail(email);
+	}
 }
