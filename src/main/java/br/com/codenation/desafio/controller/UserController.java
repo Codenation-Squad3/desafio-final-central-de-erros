@@ -11,5 +11,4 @@ import lombok.AllArgsConstructor;
 public class UserController {
 
 	
-	
 }

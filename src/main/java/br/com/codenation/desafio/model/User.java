@@ -49,7 +49,7 @@ public class User {
     @Column(unique = true)
     @Size(min = 5, max = 60)
     private String email;
-	
+
     @NotNull
     private String password;
 	

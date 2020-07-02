@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public enum Status {
 
-    ARQUIVADO("Arquivado"),
-    ATIVO("Ativo"),
-    EXCLUIDO("Excluído");
+    ARCHIVED("Arquivado"),
+    ACTIVE("Ativo"),
+    EXCLUDED("Excluído");
 
     private String description;
 
