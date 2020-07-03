@@ -1,5 +1,17 @@
 # Desafio Final Central de Erros - backend
 
+
+Quick start
+===========
+
+
+| Step                       | Command                         |
+| ---------------------------|:-------------------------------:|
+| Setup Banco de dados       | ``$ docker-compose up --build`` |
+| Rodar aplicação            | Rodar o Application             |
+
+
+
 Descrição...
 
 **Equipe backend**
