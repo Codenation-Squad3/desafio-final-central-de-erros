@@ -11,4 +11,5 @@ public class OAuthTestController {
     public String oauthtest(){
         return "Somente mostrado se usuário estiver logado.";
     }
+
 }

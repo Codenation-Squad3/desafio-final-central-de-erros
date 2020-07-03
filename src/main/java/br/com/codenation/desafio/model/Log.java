@@ -3,18 +3,14 @@ package br.com.codenation.desafio.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import br.com.codenation.desafio.enums.Environment;
+import br.com.codenation.desafio.enums.Level;
+import br.com.codenation.desafio.enums.Status;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.validation.annotation.Validated;
 
@@ -31,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Validated
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="logs")
+@Table(name="log")
 public class Log {
 
 	@Id
@@ -65,10 +61,23 @@ public class Log {
     @NotNull
     private LocalDateTime lastOccurrence;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "log")
     private List<Ocurrence> occurrences;
 
     @NotNull
-    @OneToOne()
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private User user;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Environment environment;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Level level;
 }

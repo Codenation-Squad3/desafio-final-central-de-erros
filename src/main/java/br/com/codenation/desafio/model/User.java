@@ -16,6 +16,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -51,12 +52,13 @@ public class User {
     @Column(unique = true)
     @Size(min = 5, max = 60)
     private String email;
-	
+
     @NotNull
     private String password;
 	
     private String token;
-	
+
+    @JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @Column(name ="user_id")
 	private List<Log> logs;
