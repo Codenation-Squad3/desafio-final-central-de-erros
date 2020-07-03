@@ -1,9 +1,11 @@
-package br.com.codenation.desafio.repository;
+package br.com.codenation.desafio.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ import br.com.codenation.desafio.enums.Status;
 import br.com.codenation.desafio.model.Log;
 import br.com.codenation.desafio.model.Ocurrence;
 import br.com.codenation.desafio.model.User;
+import br.com.codenation.desafio.repository.LogRepository;
+import br.com.codenation.desafio.repository.OcurrenceRepository;
+import br.com.codenation.desafio.repository.UserRepository;
 
 @SpringBootTest
 public class LogRepositoryTest {
@@ -36,6 +41,7 @@ public class LogRepositoryTest {
 	}
 	
 	@Test
+	@Transactional
 	public void whenCreateLog_thenFindUserAndOcurrenceAreNotNull() {
 		User user = createUser();
 		Log log = createLog(user);
@@ -48,17 +54,15 @@ public class LogRepositoryTest {
 		assertThat(myOcurrence.isPresent()).isTrue();
 	}
 	
-	
-	// more ...
-	
-	
-	
 	private Log createLog(User user) {
 		Log log = Log.builder()
 				.title("error 8573 user interaction")
 				.description("some error with stack trace line 1234")
 				.origin("in 127.0.0.1 some app")
 				.lastOccurrence(LocalDateTime.now())
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.environment(Environment.DEVELOPMENT)
 				.user(user)
 				.build();
 		return logRepository.save(log);

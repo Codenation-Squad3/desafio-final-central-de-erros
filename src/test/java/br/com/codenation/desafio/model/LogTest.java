@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import br.com.codenation.desafio.enums.Environment;
 import br.com.codenation.desafio.enums.Level;
+import br.com.codenation.desafio.enums.Status;
 
 
 @SpringBootTest
@@ -37,7 +38,7 @@ public class LogTest {
 		Set<ConstraintViolation<Log>> constraintViolations = validator
 				.validate(log);
 
-		assertEquals(5, constraintViolations.size());
+		assertEquals(8, constraintViolations.size());
 	}
 
 	@Test
@@ -57,6 +58,9 @@ public class LogTest {
 				.description("description description")
 				.lastOccurrence(LocalDateTime.now())
 				.user(user)
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.environment(Environment.DEVELOPMENT)
 				.build();
 
 		Set<ConstraintViolation<Log>> constraintViolations = validator
@@ -78,6 +82,9 @@ public class LogTest {
 				.description("s")
 				.lastOccurrence(LocalDateTime.now())
 				.user(user)
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.environment(Environment.DEVELOPMENT)
 				.build();
 
 		Set<ConstraintViolation<Log>> constraintViolations = validator
@@ -99,6 +106,9 @@ public class LogTest {
 				.description("description of the error stack trace")
 				.lastOccurrence(LocalDateTime.now())
 				.user(user)
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.environment(Environment.DEVELOPMENT)
 				.build();
 
 		Set<ConstraintViolation<Log>> constraintViolations = validator
@@ -121,6 +131,9 @@ public class LogTest {
 				.origin("128.168.0.3")
 				.description("description of the error stack trace")
 				.lastOccurrence(null)
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.environment(Environment.DEVELOPMENT)
 				.user(user)
 				.build();
 
@@ -144,6 +157,9 @@ public class LogTest {
 				.lastOccurrence(LocalDateTime.now())
 				.description(null)
 				.origin("128.168.0.3")
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.environment(Environment.DEVELOPMENT)
 				.user(user)
 				.build();
 
@@ -161,14 +177,17 @@ public class LogTest {
 				.description("description of the error stack trace")
 				.lastOccurrence(LocalDateTime.now())
 				.origin("128.168.0.3")
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.environment(Environment.DEVELOPMENT)
 				.user(null)
 				.build();
 
 		Set<ConstraintViolation<Log>> constraintViolations = validator
 				.validate(log);
 
-		//constraintViolations.forEach(
-		//		cv -> System.out.println(cv.getPropertyPath() + " " + cv.getMessage()));
+		constraintViolations.forEach(
+				cv -> System.out.println(cv.getPropertyPath() + " " + cv.getMessage()));
 		
 		assertEquals(1, constraintViolations.size());
 	}
