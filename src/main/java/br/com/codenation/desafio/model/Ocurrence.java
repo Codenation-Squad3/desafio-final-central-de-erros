@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.validation.annotation.Validated;
 
 import br.com.codenation.desafio.enums.Environment;
@@ -42,8 +43,8 @@ public class Ocurrence {
     @ManyToOne
     private Log log;
 
-    @Column
-    @NotNull
+	@CreatedDate
+	@Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime dtCreated;
 
     @NotNull

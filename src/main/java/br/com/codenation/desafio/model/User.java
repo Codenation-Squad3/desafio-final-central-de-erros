@@ -55,14 +55,13 @@ public class User {
     @NotNull
     private String password;
 	
-    private String token;
-	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @Column(name ="user_id")
 	private List<Log> logs;
 	
 	@NotNull
 	@CreatedDate
+	@Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime createdAt;
 	
 }

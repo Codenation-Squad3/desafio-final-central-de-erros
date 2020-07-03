@@ -1,35 +1,30 @@
 package br.com.codenation.desafio.mappers;
 
-
 import java.util.List;
 import java.util.UUID;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
+import br.com.codenation.desafio.dtos.UserDTO;
 import br.com.codenation.desafio.model.User;
-import br.com.condenation.dtos.UserDTO;
-
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
+
+	@Mapping(source = "id", target = "id")
+	@Mapping(source = "dto.nome", target = "nome")
+	@Mapping(source = "dto.email", target = "email")
+	@Mapping(source = "dto.password", target = "password")
+	User toUser(UserDTO dto, UUID id);
 	
+	@Mapping(source = "dto.nome", target = "nome")
+	@Mapping(source = "dto.email", target = "email")
+	@Mapping(source = "dto.createdAt", target = "createdAt")
+	@Mapping(source = "dto.password", target = "password")
+	UserDTO toUserDTO(User dto);
 	
-	 @Mappings({
-	  @Mapping(source = "dto.id", target = "id"),
-	  @Mapping(source = "dto.nome", target = "nome"),
-	  @Mapping(source = "dto.email", target = "email"),
-	  @Mapping(source = "dto.password", target = "password", ignore = true),
-	  @Mapping(source = "dto.token", target = "token"),
-	  @Mapping(source = "dto.logs", target = "logs"),
-	  @Mapping(source = "dto.createdAt", target = "createdAt", dateFormat ="yyyy-MM-dd HH:mm"), })
-	  
-	  List<UserDTO> mapToDTO(List<User> list);
-	  
-	  UserDTO mapToUserDTO(User user);
-	  
-	  User mapToUser(UserDTO userDTO, UUID id);
-	 
-  
+	List<UserDTO> toUserDTO(List<User> users);
+	
+	List<User> toUser(List<UserDTO> users);
 }

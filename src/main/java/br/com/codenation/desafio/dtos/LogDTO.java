@@ -1,4 +1,4 @@
-package br.com.condenation.dtos;
+package br.com.codenation.desafio.dtos;
 
 import java.time.LocalDateTime;
 import java.util.List;
