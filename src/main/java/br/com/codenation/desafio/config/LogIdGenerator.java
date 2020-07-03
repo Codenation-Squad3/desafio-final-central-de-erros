@@ -11,6 +11,7 @@ import java.util.Properties;
 
 import javax.xml.bind.DatatypeConverter;
 
+import br.com.codenation.desafio.repository.LogRepository;
 import org.hibernate.HibernateException;
 import org.hibernate.MappingException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
@@ -18,11 +19,15 @@ import org.hibernate.id.enhanced.SequenceStyleGenerator;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.type.StringType;
 import org.hibernate.type.Type;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class LogIdGenerator extends SequenceStyleGenerator {
 	
 	private static final String PARAMETER = "annotation_name";
 	private String annotationName;
+
+	@Autowired
+	private LogRepository repository;
 
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {

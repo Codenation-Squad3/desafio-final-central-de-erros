@@ -16,16 +16,16 @@ import br.com.condenation.dtos.UserDTO;
 public interface UserMapper {
 	
 	
-	 @Mappings({
-	  @Mapping(source = "dto.id", target = "id"),
-	  @Mapping(source = "dto.nome", target = "nome"),
-	  @Mapping(source = "dto.email", target = "email"),
-	  @Mapping(source = "dto.password", target = "password", ignore = true),
-	  @Mapping(source = "dto.token", target = "token"),
-	  @Mapping(source = "dto.logs", target = "logs"),
-	  @Mapping(source = "dto.createdAt", target = "createdAt", dateFormat ="yyyy-MM-dd HH:mm"), })
-	  
-	  List<UserDTO> mapToDTO(List<User> list);
+//	 @Mappings({
+//	  @Mapping(source = "dto.id", target = "id"),
+//	  @Mapping(source = "dto.nome", target = "nome"),
+//	  @Mapping(source = "dto.email", target = "email"),
+//	  @Mapping(source = "dto.password", target = "password", ignore = true),
+//	  @Mapping(source = "dto.token", target = "token"),
+//	  @Mapping(source = "dto.logs", target = "logs"),
+//	  @Mapping(source = "dto.createdAt", target = "createdAt", dateFormat ="yyyy-MM-dd HH:mm"), })
+//
+//	  List<UserDTO> mapToDTO(List<User> list);
 	  
 	  UserDTO mapToUserDTO(User user);
 	  

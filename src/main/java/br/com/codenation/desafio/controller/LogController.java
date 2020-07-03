@@ -1,13 +1,11 @@
 package br.com.codenation.desafio.controller;
 
 import br.com.codenation.desafio.model.Log;
+import br.com.codenation.desafio.request.LogRequest;
 import br.com.codenation.desafio.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,17 +16,17 @@ public class LogController {
     @Autowired
     private LogService service;
 
-    public Page<List<Log>> findByExample(@RequestBody Log logExample){
+    @GetMapping("example")
+    public Page<Log> findByExample(@RequestBody Log logExample){
         return service.findByExample(logExample);
     }
 
-    @PostMapping("save")
-    private Log save(@RequestBody Log log){
-        return  service.save(log);
+    @GetMapping
+    public Page<Log> findAll(){
+        return service.findAll();
     }
 
     @PostMapping
-    public List<Log> saveAll(@RequestBody List<Log> newLogs){
-        return  service.saveAll(newLogs);
-    }
+    private Log save(@RequestBody LogRequest log){ return  service.save(log); }
+
 }

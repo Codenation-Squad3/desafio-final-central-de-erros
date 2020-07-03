@@ -47,18 +47,6 @@ public class Ocurrence {
     private LocalDateTime dtCreated;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    private Environment environment;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private Level level;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
-    @NotNull
     @OneToOne
     private User user;
     
