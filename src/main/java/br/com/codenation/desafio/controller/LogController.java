@@ -10,15 +10,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/log")
+@RequestMapping("/logs")
 public class LogController {
 
     @Autowired
     private LogService service;
 
-    @GetMapping("example")
-    public Page<Log> findByExample(@RequestBody Log logExample){
-        return service.findByExample(logExample);
+    @GetMapping("/findByExample/page/{page}/orderBy/{sortTarget}/direction/{sortDirection}")
+    public Page<Log> findByExample(@RequestBody Log logExample,
+                                   @PathVariable(name = "page" , required = false) Integer page,
+                                   @PathVariable(name = "sortTarget" , required = false) String sortTarget,
+                                   @PathVariable(name = "sortDirection", required = false) String sortDirection){
+
+        return service.findByExample(logExample,page,sortTarget,sortDirection);
     }
 
     @GetMapping
