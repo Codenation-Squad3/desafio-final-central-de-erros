@@ -62,19 +62,19 @@ public class LogService implements LogServiceInterface{
 					.title(logRequest.getTitle())
 					.user(userRepository.findById(logRequest.getUserId()).get())
 					.occurrences(new ArrayList<>()).build()
-			);
+					);
 		}
 
 		return null;//Implemntar resposta "genérica"
 
 	}
 
-    public Page<Log> findByExample(Log logExample, Integer page ,String orderBy, String direction) {
+	public Page<Log> findByExample(Log logExample, Integer page ,String orderBy, String direction) {
 		Pageable pageOptions = PageRequest.of(page, 20, Sort.Direction.valueOf(direction), orderBy);
 		return logRepository.findAll(Example.of(logExample), pageOptions);
-    }
+	}
 
-    public List<Log> saveAll(List<Log> newlogs){
+	public List<Log> saveAll(List<Log> newlogs){
 		return logRepository.saveAll(newlogs);
 	}
 
@@ -82,5 +82,11 @@ public class LogService implements LogServiceInterface{
 		Pageable firstPageWithTreeElements =
 				PageRequest.of(0, 3, Sort.by("origin").descending());
 		return logRepository.findAll(firstPageWithTreeElements);
+	}
+
+	@Override
+	public Log save(Log object) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
