@@ -24,6 +24,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class LogRequest {
