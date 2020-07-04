@@ -1,11 +1,10 @@
 package br.com.codenation.desafio.service.interfaces;
 
-import br.com.codenation.desafio.model.Log;
-import br.com.codenation.desafio.request.LogRequest;
+import br.com.codenation.desafio.model.LogReturnDTO;
+import br.com.codenation.desafio.dtos.request.LogRequestDTO;
 
-public interface LogServiceInterface{
+public interface LogServiceInterface {
 
-    Log save(LogRequest object);
-
+    LogReturnDTO save(LogRequestDTO object);
 
 }

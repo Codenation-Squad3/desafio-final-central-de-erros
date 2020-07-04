@@ -1,12 +1,11 @@
 package br.com.codenation.desafio.constants;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import java.util.List;
-
+//@ConfigurationProperties(prefix = "codenation.oauth.client")
 public class OAuthClient {
 
+    //TODO - mover para properties
     public static final String clientId = "client-id";
     public static final String clientSecret = "client-secret";
     public static final String[] grantTypes = {"password", "authorization_code", "refresh_token", "implicit"};

@@ -9,5 +9,11 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
     generate-ddl: true
     hibernate.ddl-auto: update
-   
+codenation:
+   oauth:
+     client:
+       client-id: 312321312
+       client-secret: 123456
+       gran-types: password,authorization
+       scopes: save,update
 

@@ -1,24 +1,18 @@
 package br.com.codenation.desafio.enums;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public enum Environment {
 
-	PRODUCTION("Produção"),
-	TEST("Teste"),
-	DEVELOPMENT("Desenvolvimento");
-	
-	private String description;
-	
-	Environment(String description) {
-		this.description = description;
-	}
-	
-	public String getDescricao() {
-		return description;
-	}
-	
+    PRODUCTION("Produção"),
+    TEST("Teste"),
+    DEVELOPMENT("Desenvolvimento");
+
+    private String description;
+
 }

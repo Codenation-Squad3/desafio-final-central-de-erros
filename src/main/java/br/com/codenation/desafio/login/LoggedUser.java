@@ -14,6 +14,7 @@ import java.util.Collection;
 public class LoggedUser implements UserDetails {
 
     private User user;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<>();

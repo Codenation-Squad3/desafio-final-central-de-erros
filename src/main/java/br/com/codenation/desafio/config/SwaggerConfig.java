@@ -15,6 +15,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+
+    public static final String TITLE = "Backend Squad3";
+    public static final String DESCRIPTION = "API Rest";
+    public static final String VERSION = "1.0";
+
     @Bean
     public Docket apis() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -28,9 +33,9 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "Backend Squad3",
-                "API Rest",
-                "1.0",
+                TITLE,
+                DESCRIPTION,
+                VERSION,
                 "N/A",
                 null,
                 "MIT",

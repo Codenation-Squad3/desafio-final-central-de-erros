@@ -1,4 +1,4 @@
-package br.com.codenation.desafio.dtos;
+package br.com.codenation.desafio.dtos.response;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,18 +16,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LogDTO {
 
-
-	private String id;
-
-	private String title;
-
-	private String origin;
-
-	private String description;
-
-	private LocalDateTime lastOccurrence;
-
-	private List<Ocurrence> occurrences;
-
-	private User user;
+    private String id;
+    private String title;
+    private String origin;
+    private String description;
+    private LocalDateTime lastOccurrence;
+    private List<Ocurrence> occurrences;
+    private User user;
 }

@@ -1,4 +1,4 @@
-package br.com.codenation.desafio.dtos;
+package br.com.codenation.desafio.dtos.response;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -19,18 +19,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OcurrenceDTO {
 
-
     private UUID id;
-
     private Log log;
- 
     private LocalDateTime dtCreated;
- 
     private Environment environment;
- 
     private Level level;
-  
     private Status status;
-
     private User user;
 }

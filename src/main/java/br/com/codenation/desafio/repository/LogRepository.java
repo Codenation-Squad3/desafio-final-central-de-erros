@@ -12,5 +12,7 @@ import br.com.codenation.desafio.model.Log;
 
 @Repository
 public interface LogRepository extends JpaRepository<Log, String> {
+
     Optional<Log> findByDescriptionAndOriginAndTitle(String description, String origin, String title);
+    
 }
