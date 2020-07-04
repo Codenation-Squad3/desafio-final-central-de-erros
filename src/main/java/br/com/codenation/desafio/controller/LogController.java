@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/logs")
 public class LogController {
@@ -16,11 +14,11 @@ public class LogController {
     @Autowired
     private LogService service;
 
-    @GetMapping("/findByExample/page/{page}/orderBy/{sortTarget}/direction/{sortDirection}")
+    @GetMapping("/search")
     public Page<Log> findByExample(@RequestBody Log logExample,
-                                   @PathVariable(name = "page" , required = false) Integer page,
-                                   @PathVariable(name = "sortTarget" , required = false) String sortTarget,
-                                   @PathVariable(name = "sortDirection", required = false) String sortDirection){
+                                   @RequestParam(name = "page" , defaultValue = "0") Integer page,
+                                   @RequestParam(name = "sortTarget" , defaultValue = "origin") String sortTarget,
+                                   @RequestParam(name = "sortDirection", defaultValue = "ASC") String sortDirection){
 
         return service.findByExample(logExample,page,sortTarget,sortDirection);
     }
