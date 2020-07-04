@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.validation.annotation.Validated;
 
@@ -39,6 +40,7 @@ public class Ocurrence {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
 
+    @JsonIgnore
     @ManyToOne
     private Log log;
 

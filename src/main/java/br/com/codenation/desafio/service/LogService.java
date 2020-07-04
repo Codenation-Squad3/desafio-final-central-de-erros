@@ -69,15 +69,9 @@ public class LogService implements LogServiceInterface{
 
 	}
 
-
-    public Page<Log> findByExample(Log logExample) {
-
-		Pageable firstPageWithTreeElements =
-				PageRequest.of(0, 1, Sort.by("origin").descending());
-
-		Example<Log> example =  Example.of(logExample);
-
-		return logRepository.findAll(example, firstPageWithTreeElements);
+    public Page<Log> findByExample(Log logExample, Integer page ,String orderBy, String direction) {
+		Pageable pageOptions = PageRequest.of(page, 20, Sort.Direction.valueOf(direction), orderBy);
+		return logRepository.findAll(Example.of(logExample), pageOptions);
     }
 
     public List<Log> saveAll(List<Log> newlogs){

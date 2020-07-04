@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 import br.com.codenation.desafio.enums.Environment;
 import br.com.codenation.desafio.enums.Level;
 import br.com.codenation.desafio.enums.Status;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.validation.annotation.Validated;

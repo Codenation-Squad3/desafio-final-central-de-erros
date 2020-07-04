@@ -69,7 +69,7 @@ public class LogServiceTest {
 				.status(Status.ACTIVE)
 				.level(Level.DEBUG)
 				.build();
-		assertThat(logService.findByExample(log).getTotalElements()).isEqualTo(1l);
+		assertThat(logService.findByExample(log,0,"level","ASC").getTotalElements()).isEqualTo(1l);
 	}
 	
 	public void whenFindByExampleWithStatus_mustReturnCorrectCount() {
@@ -77,7 +77,7 @@ public class LogServiceTest {
 		Log log = Log.builder()
 				.status(Status.ACTIVE)
 				.build();
-		assertThat(logService.findByExample(log).getTotalElements()).isEqualTo(1l);
+		assertThat(logService.findByExample(log,0,"status","ASC").getTotalElements()).isEqualTo(1l);
 	}
 	
 	public void whenFindByExampleWithEnvironment_mustReturnCorrectCount() {
@@ -85,7 +85,7 @@ public class LogServiceTest {
 		Log log = Log.builder()
 				.environment(Environment.DEVELOPMENT)
 				.build();
-		assertThat(logService.findByExample(log).getTotalElements()).isEqualTo(1l);
+		assertThat(logService.findByExample(log,0,"environment","ASC").getTotalElements()).isEqualTo(1l);
 	}
 	
 	public void whenFindByExampleWithLevel_mustReturnCorrectCount() {
@@ -93,7 +93,7 @@ public class LogServiceTest {
 		Log log = Log.builder()
 				.level(Level.DEBUG)
 				.build();
-		assertThat(logService.findByExample(log).getTotalElements()).isEqualTo(1l);
+		assertThat(logService.findByExample(log,0,"level","ASC").getTotalElements()).isEqualTo(1l);
 	}
 	
 	public void whenFindByExampleWithTitle_mustReturnCorrectCount() {
@@ -101,7 +101,7 @@ public class LogServiceTest {
 		Log log = Log.builder()
 				.title(TITLE+"1")
 				.build();
-		assertThat(logService.findByExample(log).getTotalElements()).isEqualTo(1l);
+		assertThat(logService.findByExample(log,0,"title","ASC").getTotalElements()).isEqualTo(1l);
 	}
 	
 	public void whenFindByExampleWithDescription_mustReturnCorrectCount() {
@@ -109,7 +109,7 @@ public class LogServiceTest {
 		Log log = Log.builder()
 				.description(DESCRIPTION)
 				.build();
-		assertThat(logService.findByExample(log).getTotalElements()).isEqualTo(1l);
+		assertThat(logService.findByExample(log,0,"description","ASC").getTotalElements()).isEqualTo(1l);
 	}
 	
 	public void whenFindByExampleWithOrigin_mustReturnCorrectCount() {
@@ -117,7 +117,7 @@ public class LogServiceTest {
 		Log log = Log.builder()
 				.origin(ORIGIN)
 				.build();
-		assertThat(logService.findByExample(log).getTotalElements()).isEqualTo(1l);
+		assertThat(logService.findByExample(log,0,"origin","ASC").getTotalElements()).isEqualTo(1l);
 	}
 	
 	
