@@ -21,6 +21,10 @@
         <jackson.version>2.9.8</jackson.version>
         <javax.version>1.1.4</javax.version>
         <johnzon.version>1.2.7</johnzon.version>
+        <security.oauth.boot.version>1.2.7</security.oauth.boot.version>
+        <spring.security.test.version>5.3.3.RELEASE</spring.security.test.version>
+        <spring.oauth.version>2.3.1.RELEASE</spring.oauth.version>
+        <maven.compiler.version>3.5.1</maven.compiler.version>
     </properties>
 
     <dependencies>
@@ -68,13 +72,13 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
-            <version>5.3.3.RELEASE</version>
+            <version>${spring.security.test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.security.oauth.boot</groupId>
             <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-            <version>2.3.1.RELEASE</version>
+            <version>${spring.oauth.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -119,7 +123,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version> <!-- or newer version -->
+                <version>${maven.compiler.version}</version> <!-- or newer version -->
                 <configuration>
                     <source>1.8</source> <!-- depending on your project -->
                     <target>1.8</target> <!-- depending on your project -->
