@@ -1,6 +1,5 @@
 package br.com.codenation.desafio.controller;
 
-import br.com.codenation.desafio.config.AuthenticationServerConfiguration;
 import br.com.codenation.desafio.constants.PatchMediaType;
 import br.com.codenation.desafio.enums.Environment;
 import br.com.codenation.desafio.enums.Level;
@@ -8,7 +7,6 @@ import br.com.codenation.desafio.enums.Status;
 import br.com.codenation.desafio.model.Log;
 import br.com.codenation.desafio.model.User;
 import br.com.codenation.desafio.repository.LogRepository;
-import br.com.codenation.desafio.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,8 +23,8 @@ import javax.transaction.Transactional;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,30 +32,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LogControllerTest {
 
-    public static final String LOG_TITLE_1 = "Log Title 1";
-    public static final String DESCRIPTION_1 = "Description 1";
-    public static final String API_TEST = "Api test";
-    public static final Environment ENVIRONMENT = Environment.PRODUCTION;
-    public static final Status STATUS = Status.ACTIVE;
-    public static final Level LEVEL = Level.ERROR;
+    public static final String LOG_TITLE = "Log Title 1";
+    public static final String LOG_DESCRIPTION = "Description 1";
+    public static final String LOG_ORIGIN = "Api test";
+    public static final Environment LOG_ENVIRONMENT = Environment.PRODUCTION;
+    public static final Status LOG_STATUS = Status.ACTIVE;
+    public static final Level LOG_LEVEL = Level.ERROR;
+    public static final String USER_EMAIL = "teste@test.com";
+    public static final String USER_NAME = "teste";
+    public static final String USER_PASSWORD = "senha";
+    public static final String USER_TOKEN = "1234";
+
+    private Log log;
+    private MockMvc mockMvc;
+
     @Autowired
     private WebApplicationContext context;
 
     @Autowired
     private LogRepository logRepository;
-
-    @Autowired
-    private AuthenticationServerConfiguration authenticationServerConfiguration;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    private Log log;
-
-    private MockMvc mockMvc;
-
-    private final String userEmail = "oauth@teste.com";
-    private final String userPassword = "password";
 
     @Before
     @Transactional
@@ -68,34 +61,40 @@ public class LogControllerTest {
                 .build();
 
         User user = User.builder()
-                .email("teste@test.com")
-                .nome("teste")
-                .password("senha")
+                .email(USER_EMAIL)
+                .nome(USER_NAME)
+                .password(USER_PASSWORD)
                 .createdAt(LocalDateTime.now())
-                .token("1234")
+                .token(USER_TOKEN)
                 .build();
 
         this.log = logRepository.save(Log.builder()
-                .title(LOG_TITLE_1)
-                .description(DESCRIPTION_1)
-                .origin(API_TEST)
-                .environment(ENVIRONMENT)
+                .title(LOG_TITLE)
+                .description(LOG_DESCRIPTION)
+                .origin(LOG_ORIGIN)
+                .environment(LOG_ENVIRONMENT)
                 .lastOccurrence(LocalDateTime.now())
-                .status(STATUS)
-                .level(LEVEL)
+                .status(LOG_STATUS)
+                .level(LOG_LEVEL)
                 .user(user)
                 .build());
-
     }
 
     @Test
-    public void Patch() throws Exception {
-        String content = "'{'\"status\": \"{0}\"'}'";
-        String format = MessageFormat.format(content, Status.EXCLUDED.toString());
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.patch("/log/" + log.getId())
+    public void updateLog_changeStatus_ShouldUpdateStatusOfLog() throws Exception {
+        String newStatusOfLog = Status.EXCLUDED.toString();
+        String jsonBody = "'{'\"status\": \"{0}\"'}'";
+        String jsonBodyFormated = MessageFormat.format(jsonBody, newStatusOfLog);
+
+        mockMvc.perform(MockMvcRequestBuilders.patch("/log/" + this.log.getId())
                 .contentType(PatchMediaType.APPLICATION_MERGE_PATCH)
-                .content(format))
+                .content(jsonBodyFormated))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.status").value("EXCLUDED"));
+                .andExpect(jsonPath("$.title", is(LOG_TITLE)))
+                .andExpect(jsonPath("$.description", is(LOG_DESCRIPTION)))
+                .andExpect(jsonPath("$.origin", is(LOG_ORIGIN)))
+                .andExpect(jsonPath("$.environment", is(LOG_ENVIRONMENT.toString())))
+                .andExpect(jsonPath("$.level", is(LOG_LEVEL.toString())))
+                .andExpect(jsonPath("$.status", is(newStatusOfLog)));
     }
 }

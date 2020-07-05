@@ -1,4 +1,4 @@
-package br.com.codenation.desafio.mappers;
+package br.com.codenation.desafio.request;
 
 import br.com.codenation.desafio.enums.Status;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LogResourceInput {
+public class LogUpdateRequestDTO {
 
     @NotNull
     @Enumerated(EnumType.STRING)
