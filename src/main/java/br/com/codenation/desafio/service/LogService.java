@@ -89,4 +89,8 @@ public class LogService implements LogServiceInterface{
 				PageRequest.of(0, 3, Sort.by("origin").descending());
 		return logRepository.findAll(firstPageWithTreeElements);
 	}
+
+	public Optional<Log> findById(String id){
+		return logRepository.findById(id);
+	}
 }
