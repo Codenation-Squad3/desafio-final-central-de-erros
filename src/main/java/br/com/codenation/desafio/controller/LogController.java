@@ -12,15 +12,19 @@ import org.springframework.web.bind.annotation.*;
 import javax.json.JsonMergePatch;
 
 @RestController
-@RequestMapping("/log")
+@RequestMapping("/logs")
 @AllArgsConstructor
 public class LogController {
 
     private LogService service;
 
-    @GetMapping("example")
-    public Page<Log> findByExample(@RequestBody Log logExample){
-        return service.findByExample(logExample);
+    @GetMapping("/search")
+    public Page<Log> findByExample(@RequestBody Log logExample,
+                                   @RequestParam(name = "page" , defaultValue = "0") Integer page,
+                                   @RequestParam(name = "sortTarget" , defaultValue = "origin") String sortTarget,
+                                   @RequestParam(name = "sortDirection", defaultValue = "ASC") String sortDirection){
+
+        return service.findByExample(logExample,page,sortTarget,sortDirection);
     }
 
     @GetMapping

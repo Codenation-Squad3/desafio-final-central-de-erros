@@ -86,7 +86,7 @@ public class LogControllerTest {
         String jsonBody = "'{'\"status\": \"{0}\"'}'";
         String jsonBodyFormated = MessageFormat.format(jsonBody, newStatusOfLog);
 
-        mockMvc.perform(MockMvcRequestBuilders.patch("/log/" + this.log.getId())
+        mockMvc.perform(MockMvcRequestBuilders.patch("/logs/" + this.log.getId())
                 .contentType(PatchMediaType.APPLICATION_MERGE_PATCH)
                 .content(jsonBodyFormated))
                 .andExpect(status().isCreated())
