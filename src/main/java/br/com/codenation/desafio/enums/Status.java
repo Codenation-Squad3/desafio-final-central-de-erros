@@ -1,10 +1,11 @@
 package br.com.codenation.desafio.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@AllArgsConstructor
 public enum Status {
 
     ARCHIVED("Arquivado"),
@@ -12,13 +13,5 @@ public enum Status {
     EXCLUDED("Excluído");
 
     private String description;
-
-    Status(String description) {
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 
 }
