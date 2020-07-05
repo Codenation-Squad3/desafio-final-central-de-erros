@@ -18,6 +18,9 @@
         <java.version>1.8</java.version>
         <org.mapstruct.version>1.3.1.Final</org.mapstruct.version>
         <swagger.version>2.9.2</swagger.version>
+        <jackson.version>2.9.8</jackson.version>
+        <javax.version>1.1.4</javax.version>
+        <johnzon.version>1.2.7</johnzon.version>
     </properties>
 
     <dependencies>
@@ -89,6 +92,22 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.johnzon</groupId>
+            <artifactId>johnzon-core</artifactId>
+            <version>${johnzon.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.json</groupId>
+            <artifactId>javax.json-api</artifactId>
+            <version>${javax.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr353</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
