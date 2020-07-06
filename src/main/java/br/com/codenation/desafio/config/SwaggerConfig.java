@@ -15,11 +15,17 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+	
+    public static final String TITLE = "${desafio.swagger.title}";
+    public static final String DESCRIPTION = "${desafio.swagger.description}";
+    public static final String VERSION = "${desafio.swagger.version}";
+    public static final String PACKAGE = "${desafio.swagger.package}";
+    
     @Bean
     public Docket apis() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("br.com.codenation.desafio"))
+                .apis(RequestHandlerSelectors.basePackage(PACKAGE))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())
@@ -28,9 +34,9 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "Backend Squad3",
-                "API Rest",
-                "1.0",
+        		TITLE,
+        		DESCRIPTION,
+        		VERSION,
                 "N/A",
                 null,
                 "MIT",
