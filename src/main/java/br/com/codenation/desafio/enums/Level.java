@@ -1,10 +1,11 @@
 package br.com.codenation.desafio.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@AllArgsConstructor
 public enum Level {
 
 	ERROR("Erro"),
@@ -12,12 +13,5 @@ public enum Level {
 	DEBUG("Debug");
 	
 	private String description;
-	
-	Level(String description) {
-		this.description = description;
-	}
-	
-	public String getDescription() {
-		return description;
-	}
+
 }

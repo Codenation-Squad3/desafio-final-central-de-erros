@@ -1,10 +1,11 @@
 package br.com.codenation.desafio.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@AllArgsConstructor
 public enum Environment {
 
 	PRODUCTION("Produção"),
@@ -12,13 +13,5 @@ public enum Environment {
 	DEVELOPMENT("Desenvolvimento");
 	
 	private String description;
-	
-	Environment(String description) {
-		this.description = description;
-	}
-	
-	public String getDescricao() {
-		return description;
-	}
-	
+
 }
