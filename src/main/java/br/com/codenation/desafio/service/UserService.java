@@ -15,11 +15,9 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @Service
-@NoArgsConstructor
 @AllArgsConstructor
 public class UserService implements UserServiceInterface {
 
-	@Autowired
 	private UserRepository userRepository;
 
 	@Override
