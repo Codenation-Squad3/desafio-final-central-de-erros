@@ -16,10 +16,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 	
-    public static final String TITLE = "${desafio.swagger.title}";
-    public static final String DESCRIPTION = "${desafio.swagger.description}";
-    public static final String VERSION = "${desafio.swagger.version}";
-    public static final String PACKAGE = "${desafio.swagger.package}";
+    public static final String TITLE = "${codenation.swagger.title}";
+    public static final String DESCRIPTION = "${codenation.swagger.description}";
+    public static final String VERSION = "${codenation.swagger.version}";
+    public static final String PACKAGE = "${codenation.swagger.package}";
     
     @Bean
     public Docket apis() {
