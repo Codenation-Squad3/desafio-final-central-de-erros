@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.codenation</groupId>
 	<artifactId>desafio</artifactId>
-	<version>0.1</version>
+	<version>0.0.1</version>
 	<name>Codenation's squad 3 challenge</name>
 	<description>Aplicação da central de erros para o projeto final da Codenation - squad 3</description>
 
