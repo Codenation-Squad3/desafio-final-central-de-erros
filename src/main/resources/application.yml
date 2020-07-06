@@ -14,4 +14,7 @@ desafio:
     description: Api Rest to Logs
     version: 1.0
     package: br.com.codenation.desafio
-
+  oauth:
+    email: admin@admin.com
+    password: admin
+    name: Admin
