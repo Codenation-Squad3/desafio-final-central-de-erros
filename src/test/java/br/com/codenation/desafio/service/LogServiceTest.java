@@ -1,13 +1,9 @@
-package br.com.codenation.desafio.controller;
-
+package br.com.codenation.desafio.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
-
 import javax.transaction.Transactional;
-
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +18,6 @@ import br.com.codenation.desafio.model.Log;
 import br.com.codenation.desafio.model.User;
 import br.com.codenation.desafio.repository.UserRepository;
 import br.com.codenation.desafio.request.LogRequest;
-import br.com.codenation.desafio.service.LogService;
 
 
 @ActiveProfiles("test")
@@ -46,9 +41,17 @@ public class LogServiceTest {
 	public void whenSaveLog_itShouldReturnLog() {
 		User user = getUser();
 		
-		LogRequest logRequest = createLogRequest(TITLE, DESCRIPTION, ORIGIN,
-				Environment.DEVELOPMENT, LocalDateTime.now(), Status.ACTIVE,
-				Level.DEBUG, user.getId());
+		LogRequest logRequest = LogRequest.builder()
+				.title(TITLE)
+				.description(DESCRIPTION)
+				.origin(ORIGIN)
+				.environment(Environment.DEVELOPMENT)
+				.lastOccurrence(LocalDateTime.now())
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.userId(user.getId())
+				.build();
+		
 		Log log = logService.save(logRequest);
 
 		assertThat(log).isNotNull();
@@ -58,113 +61,207 @@ public class LogServiceTest {
 	@Test
 	@Transactional
 	public void whenFindAll_mustReturnCorrectCount() {
-		initLogs();
-		assertThat(logService.findAll().getTotalElements()).isEqualTo(3l);
-	}
-	
-	public void whenFindByExampleWithStatusAndEnvironmentAndLevel_mustReturnCorrectCount() {
-		initLogs();
-		Log log = Log.builder()
-				.environment(Environment.DEVELOPMENT)
-				.status(Status.ACTIVE)
-				.level(Level.DEBUG)
-				.build();
-		assertThat(logService.findByExample(log,0,"level","ASC").getTotalElements()).isEqualTo(1l);
-	}
-	
-	public void whenFindByExampleWithStatus_mustReturnCorrectCount() {
-		initLogs();
-		Log log = Log.builder()
-				.status(Status.ACTIVE)
-				.build();
-		assertThat(logService.findByExample(log,0,"status","ASC").getTotalElements()).isEqualTo(1l);
-	}
-	
-	public void whenFindByExampleWithEnvironment_mustReturnCorrectCount() {
-		initLogs();
-		Log log = Log.builder()
-				.environment(Environment.DEVELOPMENT)
-				.build();
-		assertThat(logService.findByExample(log,0,"environment","ASC").getTotalElements()).isEqualTo(1l);
-	}
-	
-	public void whenFindByExampleWithLevel_mustReturnCorrectCount() {
-		initLogs();
-		Log log = Log.builder()
-				.level(Level.DEBUG)
-				.build();
-		assertThat(logService.findByExample(log,0,"level","ASC").getTotalElements()).isEqualTo(1l);
-	}
-	
-	public void whenFindByExampleWithTitle_mustReturnCorrectCount() {
-		initLogs();
-		Log log = Log.builder()
-				.title(TITLE+"1")
-				.build();
-		assertThat(logService.findByExample(log,0,"title","ASC").getTotalElements()).isEqualTo(1l);
-	}
-	
-	public void whenFindByExampleWithDescription_mustReturnCorrectCount() {
-		initLogs();
-		Log log = Log.builder()
+		User user = getUser();
+		LogRequest logRequest1 = LogRequest.builder()
+				.title("error test 1")
 				.description(DESCRIPTION)
-				.build();
-		assertThat(logService.findByExample(log,0,"description","ASC").getTotalElements()).isEqualTo(1l);
-	}
-	
-	public void whenFindByExampleWithOrigin_mustReturnCorrectCount() {
-		initLogs();
-		Log log = Log.builder()
 				.origin(ORIGIN)
+				.environment(Environment.DEVELOPMENT)
+				.lastOccurrence(LocalDateTime.now())
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.userId(user.getId())
 				.build();
-		assertThat(logService.findByExample(log,0,"origin","ASC").getTotalElements()).isEqualTo(1l);
+		LogRequest logRequest2 = LogRequest.builder()
+				.title("error test 2")
+				.description(DESCRIPTION)
+				.origin(ORIGIN)
+				.environment(Environment.DEVELOPMENT)
+				.lastOccurrence(LocalDateTime.now())
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.userId(user.getId())
+				.build();
+		
+		logService.save(logRequest1);
+		logService.save(logRequest2);
+
+		assertThat(logService.findAll().getTotalElements()).isEqualTo(2l);
 	}
-	
-	
+
+	@Test
+	@Transactional
+	public void whenFindByExampleWithStatusAndEnvironmentAndLevel_mustReturnCorrectCount() {
+		User user = getUser();
+		LogRequest logRequest1 = LogRequest.builder()
+				.title("error test 1")
+				.description(DESCRIPTION)
+				.origin(ORIGIN)
+				.environment(Environment.DEVELOPMENT)
+				.lastOccurrence(LocalDateTime.now())
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.userId(user.getId())
+				.build();
+		LogRequest logRequest2 = LogRequest.builder()
+				.title("error test 1")
+				.description(DESCRIPTION)
+				.origin(ORIGIN)
+				.environment(Environment.PRODUCTION)
+				.lastOccurrence(LocalDateTime.now())
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.userId(user.getId())
+				.build();
+		Log log = Log.builder()
+				.environment(Environment.DEVELOPMENT)
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.build();
+		
+		logService.save(logRequest1);
+		logService.save(logRequest2);
+		
+		assertThat(logService.findByExample(log, 0, "level", "ASC").getTotalElements()).isEqualTo(1l);
+	}
+
+	@Test
+	@Transactional
+	public void whenFindByExampleWithStatus_mustReturnCorrectCount() {
+		User user = getUser();
+		LogRequest logRequest1 = LogRequest.builder()
+				.title("error test 1")
+				.description(DESCRIPTION)
+				.origin(ORIGIN)
+				.environment(Environment.DEVELOPMENT)
+				.lastOccurrence(LocalDateTime.now())
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.userId(user.getId())
+				.build();
+		LogRequest logRequest2 = LogRequest.builder()
+				.title("error test 1")
+				.description(DESCRIPTION)
+				.origin(ORIGIN)
+				.environment(Environment.DEVELOPMENT)
+				.lastOccurrence(LocalDateTime.now())
+				.status(Status.EXCLUDED)
+				.level(Level.DEBUG)
+				.userId(user.getId())
+				.build();
+		Log log = Log.builder()
+				.status(Status.ACTIVE)
+				.build();
+		
+		logService.save(logRequest1);
+		logService.save(logRequest2);
+		
+		assertThat(logService.findByExample(log, 0, "level", "ASC").getTotalElements()).isEqualTo(1l);
+	}
+
+	@Test
+	@Transactional
+	public void whenFindByExampleWithEnvironment_mustReturnCorrectCount() {
+		User user = getUser();
+		LogRequest logRequest1 = LogRequest.builder()
+				.title("error test 1")
+				.description(DESCRIPTION)
+				.origin(ORIGIN)
+				.environment(Environment.PRODUCTION)
+				.lastOccurrence(LocalDateTime.now())
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.userId(user.getId())
+				.build();
+		LogRequest logRequest2 = LogRequest.builder()
+				.title("error test 2")
+				.description(DESCRIPTION)
+				.origin(ORIGIN)
+				.environment(Environment.DEVELOPMENT)
+				.lastOccurrence(LocalDateTime.now())
+				.status(Status.EXCLUDED)
+				.level(Level.DEBUG)
+				.userId(user.getId())
+				.build();
+		Log log = Log.builder()
+				.environment(Environment.DEVELOPMENT)
+				.build();
+		
+		logService.save(logRequest1);
+		logService.save(logRequest2);
+		
+		assertThat(logService.findByExample(log, 0, "level", "ASC").getTotalElements()).isEqualTo(1l);
+	}
+
+	@Test
+	@Transactional
+	public void whenFindByExampleWithLevel_mustReturnCorrectCount() {
+		User user = getUser();
+		LogRequest logRequest1 = LogRequest.builder()
+				.title("error test 1")
+				.description(DESCRIPTION)
+				.origin(ORIGIN)
+				.environment(Environment.PRODUCTION)
+				.lastOccurrence(LocalDateTime.now())
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.userId(user.getId())
+				.build();
+		LogRequest logRequest2 = LogRequest.builder()
+				.title("error test 2")
+				.description(DESCRIPTION)
+				.origin(ORIGIN)
+				.environment(Environment.DEVELOPMENT)
+				.lastOccurrence(LocalDateTime.now())
+				.status(Status.ACTIVE)
+				.level(Level.ERROR)
+				.userId(user.getId())
+				.build();
+		Log log = Log.builder()
+				.environment(Environment.DEVELOPMENT)
+				.build();
+		
+		logService.save(logRequest1);
+		logService.save(logRequest2);
+		
+		assertThat(logService.findByExample(log, 0, "level", "ASC").getTotalElements()).isEqualTo(1l);
+	}
+
+	@Test
+	@Transactional
+	public void whenFindByExampleWithTitle_mustReturnCorrectCount() {
+		User user = getUser();
+		LogRequest logRequest1 = LogRequest.builder()
+				.title(TITLE)
+				.description(DESCRIPTION)
+				.origin(ORIGIN)
+				.environment(Environment.PRODUCTION)
+				.lastOccurrence(LocalDateTime.now())
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.userId(user.getId())
+				.build();
+		LogRequest logRequest2 = LogRequest.builder()
+				.title(TITLE+"2")
+				.description(DESCRIPTION)
+				.origin(ORIGIN)
+				.environment(Environment.DEVELOPMENT)
+				.lastOccurrence(LocalDateTime.now())
+				.status(Status.ACTIVE)
+				.level(Level.DEBUG)
+				.userId(user.getId())
+				.build();
+		Log log = Log.builder()
+				.title(TITLE)
+				.build();
+		
+		logService.save(logRequest1);
+		logService.save(logRequest2);
+		
+		assertThat(logService.findByExample(log, 0, "level", "ASC").getTotalElements()).isEqualTo(1l);
+	}
+
 	private User getUser() {
 		return userRepository.findByEmail(EMAIL).get();
-	}
-	
-	private void initLogs() {
-		User user = getUser();
-		
-		logService.save(
-			createLogRequest(TITLE+"1", DESCRIPTION, ORIGIN, Environment.DEVELOPMENT,
-				LocalDateTime.now(), Status.ACTIVE, Level.DEBUG, user.getId()));
-		logService.save(
-			createLogRequest(TITLE+"2", DESCRIPTION, ORIGIN, Environment.PRODUCTION,
-				LocalDateTime.now(), Status.ARCHIVED, Level.ERROR, user.getId()));
-		logService.save(
-			createLogRequest(TITLE+"3", DESCRIPTION, ORIGIN, Environment.TEST,
-				LocalDateTime.now(), Status.EXCLUDED, Level.WARNING, user.getId()));
-	}
-	
-	private LogRequest createLogRequest(String title, String description,
-			String origin, Environment environment, LocalDateTime lastOcurrence,
-			Status status, Level level, UUID userId) {
-		return LogRequest.builder()
-			.title(title)
-			.description(description)
-			.origin(origin)
-			.environment(environment)
-			.lastOccurrence(lastOcurrence)
-			.status(status)
-			.level(level)
-			.userId(userId)
-			.build();
-	}
-	
-	private Log createLog(String title, String description,
-			String origin, Environment environment, LocalDateTime lastOcurrence,
-			Status status, Level level) {
-		return Log.builder()
-				.title(title)
-				.description(description)
-				.origin(origin)
-				.environment(environment)
-				.lastOccurrence(lastOcurrence)
-				.status(status)
-				.level(level)
-				.build();
 	}
 }

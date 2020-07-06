@@ -1,4 +1,4 @@
-package br.com.codenation.desafio.service;
+package br.com.codenation.desafio.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -53,7 +53,7 @@ public class LogRepositoryTest {
 		assertThat(myUser.isPresent()).isTrue();
 		assertThat(myOcurrence.isPresent()).isTrue();
 	}
-	
+
 	private Log createLog(User user) {
 		Log log = Log.builder()
 				.title("error 8573 user interaction")
@@ -67,7 +67,7 @@ public class LogRepositoryTest {
 				.build();
 		return logRepository.save(log);
 	}
-	
+
 	private User createUser() {
 		User user = User.builder()
 				.nome("John Doe")

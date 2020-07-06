@@ -84,7 +84,7 @@ public class LogIdGenerator extends SequenceStyleGenerator {
 						return true;
 					return false;
 				}).reduce("", (partial, field) -> {
-					return getFieldValue(field, object);
+					return partial + getFieldValue(field, object);
 				}, String::concat);
 	}
 
