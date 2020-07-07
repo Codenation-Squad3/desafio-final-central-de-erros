@@ -1,10 +1,12 @@
 package br.com.codenation.desafio.dtos;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
-import br.com.codenation.desafio.model.Log;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,17 +19,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserDTO {
 
-    private UUID id;
+	private UUID id;
 
-    private String nome;
+	@Size(min = 3, max = 120)
+	@NotEmpty
+	private String nome;
 
-    private String email;
-		
-    private String password;
+	@Email
+	@NotEmpty
+	@Size(min = 5, max = 60)
+	private String email;
 
-    private String token;
-
-    private List<Log> logs;
+	@NotEmpty
+	@Size(min = 6, max = 60)
+	private String password;
 	
 	private LocalDateTime createdAt;
 }

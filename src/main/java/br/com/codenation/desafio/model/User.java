@@ -65,6 +65,7 @@ public class User {
 	
 	@NotNull
 	@CreatedDate
+	@Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime createdAt;
 	
 }

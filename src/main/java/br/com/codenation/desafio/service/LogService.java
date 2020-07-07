@@ -1,5 +1,19 @@
 package br.com.codenation.desafio.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import javax.json.JsonMergePatch;
+
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import br.com.codenation.desafio.exceptions.ObjectNotFoundException;
 import br.com.codenation.desafio.mappers.LogMapper;
 import br.com.codenation.desafio.model.Log;
 import br.com.codenation.desafio.model.Ocurrence;
@@ -11,13 +25,6 @@ import br.com.codenation.desafio.request.LogUpdateRequestDTO;
 import br.com.codenation.desafio.service.interfaces.LogServiceInterface;
 import br.com.codenation.desafio.util.PatchHelper;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.*;
-import org.springframework.stereotype.Service;
-
-import javax.json.JsonMergePatch;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service("log")
 @AllArgsConstructor
@@ -56,7 +63,6 @@ public class LogService implements LogServiceInterface{
 					Log.builder()
 					.description(logRequest.getDescription())
 					.environment(logRequest.getEnvironment())
-					.lastOccurrence(logRequest.getLastOccurrence())
 					.level(logRequest.getLevel())
 					.origin(logRequest.getOrigin())
 					.status(logRequest.getStatus())
@@ -91,7 +97,8 @@ public class LogService implements LogServiceInterface{
 	}
 
 	public Log update(String id, JsonMergePatch mergePatchDocument){
-		Log log = logRepository.findById(id).orElseThrow(RuntimeException::new);
+		Log log = logRepository.findById(id)
+				.orElseThrow(() -> new ObjectNotFoundException("Log with " + id + " id does not exist"));
 		LogUpdateRequestDTO logDto = logMapper.toDto(log);
 		LogUpdateRequestDTO logRequestDto = patchHelper.mergePatch(mergePatchDocument,
 				logDto, LogUpdateRequestDTO.class);
