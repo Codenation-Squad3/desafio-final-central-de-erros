@@ -1,5 +1,6 @@
 package br.com.codenation.desafio.controller;
 
+import br.com.codenation.desafio.config.AuthenticationServerConfiguration;
 import br.com.codenation.desafio.constants.PatchMediaType;
 import br.com.codenation.desafio.enums.Environment;
 import br.com.codenation.desafio.enums.Level;
@@ -11,7 +12,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -22,9 +25,11 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.transaction.Transactional;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
+import java.util.Base64;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -42,6 +47,8 @@ public class LogControllerTest {
     public static final String USER_NAME = "teste";
     public static final String USER_PASSWORD = "senha";
     public static final String USER_TOKEN = "1234";
+    public static final String CLIENT_ID = "client-id";
+    public static final String CLIENT_SECRET = "client-secret";
 
     private Log log;
     private MockMvc mockMvc;
@@ -51,6 +58,9 @@ public class LogControllerTest {
 
     @Autowired
     private LogRepository logRepository;
+    
+    @Autowired
+    private AuthenticationServerConfiguration authenticationServerConfiguration;
 
     @Before
     @Transactional
@@ -63,7 +73,7 @@ public class LogControllerTest {
         User user = User.builder()
                 .email(USER_EMAIL)
                 .nome(USER_NAME)
-                .password(USER_PASSWORD)
+                .password(authenticationServerConfiguration.passwordEncoder().encode(USER_PASSWORD))
                 .createdAt(LocalDateTime.now())
                 .token(USER_TOKEN)
                 .build();
@@ -87,6 +97,7 @@ public class LogControllerTest {
         String jsonBodyFormated = MessageFormat.format(jsonBody, newStatusOfLog);
 
         mockMvc.perform(MockMvcRequestBuilders.patch("/logs/" + this.log.getId())
+        		.header("Authorization", "Bearer " + obtainAccessToken())
                 .contentType(PatchMediaType.APPLICATION_MERGE_PATCH)
                 .content(jsonBodyFormated))
                 .andExpect(status().isCreated())
@@ -96,5 +107,24 @@ public class LogControllerTest {
                 .andExpect(jsonPath("$.environment", is(LOG_ENVIRONMENT.toString())))
                 .andExpect(jsonPath("$.level", is(LOG_LEVEL.toString())))
                 .andExpect(jsonPath("$.status", is(newStatusOfLog)));
+    }
+    
+    
+    private String obtainAccessToken() throws Exception {
+        String encodedCredentials = Base64.getEncoder().encodeToString(
+                (CLIENT_ID + ":" + CLIENT_SECRET).getBytes());
+        String authorizationHeader = "Basic " + encodedCredentials;
+
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders
+                .post("/oauth/token?username="+ USER_EMAIL +
+                        "&password=" + USER_PASSWORD + "&grant_type=password")
+                .header("Authorization", authorizationHeader)
+                .accept(MediaType.ALL))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"));
+
+        String resultString = result.andReturn().getResponse().getContentAsString();
+        JacksonJsonParser jsonParser = new JacksonJsonParser();
+        return jsonParser.parseMap(resultString).get("access_token").toString();
     }
 }

@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.codenation.desafio.model.User;
@@ -18,24 +19,29 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserService implements UserServiceInterface {
 
-	private UserRepository userRepository;
+    private UserRepository userRepository;
+	
+    private BCryptPasswordEncoder passwordEncoder;
 
-	@Override
-	public User save(User user) {
-		return this.userRepository.save(user);
-	}
-	
-	@Override
-	public Optional<User> findById(UUID id) {
-    	return this.userRepository.findById(id);
-	}
-	
-    public Page<User> buscarTodos(Pageable pageable) {
+    @Override
+    public User save(User user) {
+        user.setPassword(
+            passwordEncoder.encode(user.getPassword()));
+
+        return this.userRepository.save(user);
+    }
+
+    @Override
+    public Optional<User> findById(UUID id) {
+        return this.userRepository.findById(id);
+    }
+
+    public Page<User> findAll(Pageable pageable) {
         return this.userRepository.findAll(pageable);
     }
 
-	@Override
-	public Optional<User> findByEmail(String email) {
-		return this.userRepository.findByEmail(email);
-	}
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return this.userRepository.findByEmail(email);
+    }
 }

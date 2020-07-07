@@ -60,7 +60,6 @@ public class Log {
 	@NotNull
 	private String description;
 
-	@NotNull
 	@CreatedDate
 	@Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime lastOccurrence;
