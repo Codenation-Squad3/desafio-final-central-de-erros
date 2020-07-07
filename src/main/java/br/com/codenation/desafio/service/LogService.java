@@ -1,32 +1,33 @@
 package br.com.codenation.desafio.service;
 
+import br.com.codenation.desafio.mappers.LogMapper;
+import br.com.codenation.desafio.model.Log;
 import br.com.codenation.desafio.model.Ocurrence;
+import br.com.codenation.desafio.repository.LogRepository;
 import br.com.codenation.desafio.repository.OcurrenceRepository;
 import br.com.codenation.desafio.repository.UserRepository;
 import br.com.codenation.desafio.request.LogRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.codenation.desafio.request.LogUpdateRequestDTO;
+import br.com.codenation.desafio.service.interfaces.LogServiceInterface;
+import br.com.codenation.desafio.util.PatchHelper;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import br.com.codenation.desafio.model.Log;
-import br.com.codenation.desafio.repository.LogRepository;
-import br.com.codenation.desafio.service.interfaces.LogServiceInterface;
-
+import javax.json.JsonMergePatch;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service("log")
+@AllArgsConstructor
 public class LogService implements LogServiceInterface{
 
-	@Autowired
 	private LogRepository logRepository;
-
-	@Autowired
 	private UserRepository userRepository;
-
-	@Autowired
 	private OcurrenceRepository ocurrenceRepository;
+	private LogMapper logMapper;
+	private PatchHelper patchHelper;
 
 	private static LogRequest logRequestS;
 
@@ -84,9 +85,20 @@ public class LogService implements LogServiceInterface{
 		return logRepository.findAll(firstPageWithTreeElements);
 	}
 
-	@Override
 	public Log save(Log object) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public Log update(String id, JsonMergePatch mergePatchDocument){
+		Log log = logRepository.findById(id).orElseThrow(RuntimeException::new);
+		LogUpdateRequestDTO logDto = logMapper.toDto(log);
+		LogUpdateRequestDTO logRequestDto = patchHelper.mergePatch(mergePatchDocument,
+				logDto, LogUpdateRequestDTO.class);
+
+		logMapper.update(log, logRequestDto);
+		logRepository.save(log);
+
+		return log;
 	}
 }
