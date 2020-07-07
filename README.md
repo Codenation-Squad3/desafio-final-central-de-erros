@@ -1,26 +1,78 @@
-# Desafio Final Central de Erros - backend
+# Central de Erros - backend
+
+Central de erros é uma api REST para centralizar logs e permitir sua categorização e busca. Foi desenvolvido em 2020 junto ao curso da Codenation Java em parceria com a CI&T. Os conhecimentos aprendidos durante as aulas foram testados e aplicados neste projeto.
+
+## Descrição
+
+**Objetivo:** Desenvolvimento de aplicação REST para cadastro e busca por logs.
+
+**Contextualização:** Em um ecossistema de uma empresa existem várias aplicações, servidores, serviços de banco de dados, etc onde são disponibilizados logs que podem informar erros, problemas de conectividade, serviços inoperantes, etc. Estas informações normalmente ficam separadas, dificultando a tomada de decisões ou mesmo a analise de alguma métrica. Dessa forma é necessário um ambiente que centralize estes logs e que permita sua categorização e busca.
+
+## Equipe backend
+
+|Alexandre Silva Simedo Pacheco|Danilo Wilson Soares da Silva|Alexandre Fernando Gans|Neemias da Silva Souza|
+| :--- | :--- | :--- | :--- |
+|![Alexandre Silva Simedo Pacheco](https://avatars0.githubusercontent.com/u/32602250?s=96&v=4)|![Danilo Wilson Soares da Silva](https://avatars2.githubusercontent.com/u/41155020?s=96&v=4)|![Alexandre Fernando Gans](https://avatars0.githubusercontent.com/u/99565?s=96&v=4)|![Neemias da Silva Souza](https://avatars0.githubusercontent.com/u/43554887?s=96&v=4)|
+|[Linkedin](https://linkedin.com) <br/>[GitHub](https://github.com) |[Linkedin](https://linkedin.com) <br/>[GitHub](https://github.com) |[Linkedin](https://www.linkedin.com/in/alexandregans/) <br/>[GitHub](https://github.com/gans) |[Linkedin](https://linkedin.com) </br>[GitHub](https://github.com/Neemias-S)|
 
 
-Quick start
-===========
+## Instalação
 
+### Pré-requisitos
 
+* É necessário ter instalado o JDK 8, verifique se o Java está instalado com o comando java -version.
+* Ferramenta de versionamento git instalada, alguns sistemas operacionais já vem por padrão com esta ferramenta.
+* Ferramenta de build Maven
+
+#### Banco de dados
+
+O banco de dados em desenvolvimento roda em memória com o banco H2. Segue abaixo o script para criar uma imagem docker do banco de dados Postgresql:
+
+#### Docker
+[arquivo de compose do docker](https://github.com/Codenation-Squad3/desafio-final-central-de-erros/blob/master/docker-compose.yml)
 | Step                       | Command                         |
 | ---------------------------|:-------------------------------:|
 | Setup Banco de dados       | ``$ docker-compose up --build`` |
 | Rodar aplicação            | Rodar o Application             |
 
+## Iniciar a aplicação
 
+Para iniciar a aplicação execute os comandos abaixo:
 
-Descrição...
+```
+git clone https://github.com/Codenation-Squad3/desafio-final-central-de-erros.git;
+cd Desafio-Final-Central-de-Erros;
+mvn spring-boot:run
+```
+Após a inicialização da api o processo estará disponível na portal 8080, você pode acessar o link abaixo para visualizar a documentação do Swagger e utilizar os métodos descritos.
 
-**Equipe backend**
-* Alexandre Silva Simedo Pacheco [Linkedin](https://linkedin.com) | [GitHub](https://github.com)
-* Danilo Wilson Soares da Silva [Linkedin](https://linkedin.com) | [GitHub](https://github.com)
-* Alexandre Fernando Gans [Linkedin](https://www.linkedin.com/in/alexandregans/) | [GitHub](https://github.com/gans)
-* Neemias da Silva Souza [Linkedin](https://linkedin.com) | [GitHub](https://github.com/Neemias-S)
-* Márcio Rafael Lisboa Resende [Linkedin](https://linkedin.com) | [GitHub](https://github.com)
+```
+http://localhost:8080/swagger-ui.html
+```
+## Arquitetura inicial da api
+[link para descrição da arquitetura inicial](https://github.com/Codenation-Squad3/desafio-final-central-de-erros/blob/master/estrutura.md)
 
+## Funcionalidades
+
+* Cadastro de usuário
+* Autenticação de usuário utilizando OAUTH2
+* Cadastro de log
+* Busca por logs
+
+## Fluxo das tarefas
+
+O desenvolvimento foi divido em sprints, onde eram planejadas as featureas a adicionar. Com o objetivo de organizar o processo de desenvovimento e avalisar o andamento das atividades foi utilizado a plataforma Trello.
+
+## Organização do repositório
+
+Com o objetivo de organizar e manter um código testável são criadas branches para commitar funcionalidades desenvolvidas. Após o termino do desenvolvimento é criado um pull request onde são feitos reviews. 
+Também são realizados testes automáticos de integração com a ferramenta de CI do Github Actions, para efetuar o build e testes.
+Após estes passos é commitado o desenvolvimento na branch master.
+
+## Ci/CD
+
+Para Continuous Integration foi utilizado o Github Actions para efetuar o build e testes automáticos, assim validar a pull request antes de review e merge com a branch master.
+Cada commit na branch master é feito o deploy automático no Heroku,
 
 ## Stories do usuário
 [planilha](https://docs.google.com/spreadsheets/d/1uAfXOJKlHbWOtik5yWVzqu_JeFT1DIN1sJ4ihf19YlM/edit#gid=0)
