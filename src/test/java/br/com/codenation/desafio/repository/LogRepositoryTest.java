@@ -1,4 +1,4 @@
-package br.com.codenation.desafio.service;
+package br.com.codenation.desafio.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
