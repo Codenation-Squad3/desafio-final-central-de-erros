@@ -19,3 +19,9 @@ authorization:
     secret: ${AUTH_CLIENT_SECRET:client-secret}
     grant-types: ${AUTH_CLIENT_GRANT_TYPES:password, authorization_code, refresh_token, implicit}
     scopes: ${AUTH_CLIENT_SCOPES:read, write, trust}
+    
+swagger:
+  title: Backend squad3
+  description: Api rest Logs
+  version: 0.0.1
+  package: br.com.codenation.desafio.controller
