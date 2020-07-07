@@ -25,9 +25,11 @@ import br.com.codenation.desafio.request.LogUpdateRequestDTO;
 import br.com.codenation.desafio.service.interfaces.LogServiceInterface;
 import br.com.codenation.desafio.util.PatchHelper;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Service("log")
 @AllArgsConstructor
+@NoArgsConstructor
 public class LogService implements LogServiceInterface{
 
 	private LogRepository logRepository;

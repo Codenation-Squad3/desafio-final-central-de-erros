@@ -3,7 +3,6 @@ package br.com.codenation.desafio.service;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,7 +12,6 @@ import br.com.codenation.desafio.model.User;
 import br.com.codenation.desafio.repository.UserRepository;
 import br.com.codenation.desafio.service.interfaces.UserServiceInterface;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 @Service
 @AllArgsConstructor
