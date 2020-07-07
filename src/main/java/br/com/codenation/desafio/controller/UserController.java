@@ -25,8 +25,10 @@ import br.com.codenation.desafio.mappers.UserMapper;
 import br.com.codenation.desafio.model.User;
 import br.com.codenation.desafio.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @RestController
+@NoArgsConstructor
 @AllArgsConstructor
 @RequestMapping("/user")
 public class UserController {
