@@ -24,4 +24,4 @@ swagger:
   description: Api rest Logs
   version: 0.0.1
   package: br.com.codenation.desafio.controller
-  url: http://localhost:8080/oauth/token
+  url: ${SWAGGER_URL:http://localhost:8080/oauth/token}

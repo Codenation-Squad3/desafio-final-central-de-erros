@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import br.com.codenation.desafio.exceptions.ObjectCreationException;
+import br.com.codenation.desafio.exceptions.ObjectNotFoundException;
 import br.com.codenation.desafio.mappers.LogMapper;
 import br.com.codenation.desafio.model.Log;
 import br.com.codenation.desafio.model.Ocurrence;
@@ -98,7 +98,7 @@ public class LogService implements LogServiceInterface{
 
 	public Log update(String id, JsonMergePatch mergePatchDocument){
 		Log log = logRepository.findById(id)
-				.orElseThrow(() -> new ObjectCreationException("User not found"));
+				.orElseThrow(() -> new ObjectNotFoundException("Log with " + id + " id does not exist"));
 		LogUpdateRequestDTO logDto = logMapper.toDto(log);
 		LogUpdateRequestDTO logRequestDto = patchHelper.mergePatch(mergePatchDocument,
 				logDto, LogUpdateRequestDTO.class);
