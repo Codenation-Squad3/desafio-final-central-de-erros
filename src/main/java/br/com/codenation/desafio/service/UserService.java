@@ -30,7 +30,7 @@ public class UserService implements UserServiceInterface {
     	return this.userRepository.findById(id);
 	}
 	
-    public Page<User> buscarTodos(Pageable pageable) {
+    public Page<User> findAll(Pageable pageable) {
         return this.userRepository.findAll(pageable);
     }
 

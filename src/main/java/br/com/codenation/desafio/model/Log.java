@@ -12,6 +12,7 @@ import br.com.codenation.desafio.enums.Level;
 import br.com.codenation.desafio.enums.Status;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.validation.annotation.Validated;
 
 import lombok.AllArgsConstructor;
@@ -59,8 +60,9 @@ public class Log {
 	@NotNull
 	private String description;
 
-	@Column
 	@NotNull
+	@CreatedDate
+	@Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime lastOccurrence;
 
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)

@@ -1,5 +1,6 @@
 package br.com.codenation.desafio.service;
 
+import br.com.codenation.desafio.exceptions.ObjectCreationException;
 import br.com.codenation.desafio.mappers.LogMapper;
 import br.com.codenation.desafio.model.Log;
 import br.com.codenation.desafio.model.Ocurrence;
@@ -15,6 +16,8 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.json.JsonMergePatch;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +46,6 @@ public class LogService implements LogServiceInterface{
 				.build();
 	}
 
-
 	public Log save(LogRequest logRequest) {
 
 		Optional<Log> existingLog = this.toLog(logRequest);
@@ -56,11 +58,11 @@ public class LogService implements LogServiceInterface{
 					Log.builder()
 					.description(logRequest.getDescription())
 					.environment(logRequest.getEnvironment())
-					.lastOccurrence(logRequest.getLastOccurrence())
 					.level(logRequest.getLevel())
 					.origin(logRequest.getOrigin())
 					.status(logRequest.getStatus())
 					.title(logRequest.getTitle())
+					.lastOccurrence(LocalDateTime.now())
 					.user(userRepository.findById(logRequest.getUserId()).get())
 					.occurrences(new ArrayList<>()).build()
 			);
@@ -70,12 +72,12 @@ public class LogService implements LogServiceInterface{
 
 	}
 
-    public Page<Log> findByExample(Log logExample, Integer page ,String orderBy, String direction) {
+	public Page<Log> findByExample(Log logExample, Integer page ,String orderBy, String direction) {
 		Pageable pageOptions = PageRequest.of(page, 20, Sort.Direction.valueOf(direction), orderBy);
 		return logRepository.findAll(Example.of(logExample), pageOptions);
-    }
+	}
 
-    public List<Log> saveAll(List<Log> newlogs){
+	public List<Log> saveAll(List<Log> newlogs){
 		return logRepository.saveAll(newlogs);
 	}
 
@@ -86,7 +88,8 @@ public class LogService implements LogServiceInterface{
 	}
 
 	public Log update(String id, JsonMergePatch mergePatchDocument){
-		Log log = logRepository.findById(id).orElseThrow(RuntimeException::new);
+		Log log = logRepository.findById(id)
+				.orElseThrow(() -> new ObjectCreationException("User not found"));
 		LogUpdateRequestDTO logDto = logMapper.toDto(log);
 		LogUpdateRequestDTO logRequestDto = patchHelper.mergePatch(mergePatchDocument,
 				logDto, LogUpdateRequestDTO.class);

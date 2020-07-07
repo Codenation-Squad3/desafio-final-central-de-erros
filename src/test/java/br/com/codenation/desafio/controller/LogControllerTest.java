@@ -1,12 +1,15 @@
 package br.com.codenation.desafio.controller;
 
-import br.com.codenation.desafio.constants.PatchMediaType;
-import br.com.codenation.desafio.enums.Environment;
-import br.com.codenation.desafio.enums.Level;
-import br.com.codenation.desafio.enums.Status;
-import br.com.codenation.desafio.model.Log;
-import br.com.codenation.desafio.model.User;
-import br.com.codenation.desafio.repository.LogRepository;
+import static org.hamcrest.CoreMatchers.is;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.text.MessageFormat;
+import java.time.LocalDateTime;
+
+import javax.transaction.Transactional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,19 +17,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.transaction.Transactional;
-import java.text.MessageFormat;
-import java.time.LocalDateTime;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import br.com.codenation.desafio.constants.PatchMediaType;
+import br.com.codenation.desafio.enums.Environment;
+import br.com.codenation.desafio.enums.Level;
+import br.com.codenation.desafio.enums.Status;
+import br.com.codenation.desafio.model.Log;
+import br.com.codenation.desafio.model.User;
+import br.com.codenation.desafio.repository.LogRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -65,7 +66,6 @@ public class LogControllerTest {
                 .nome(USER_NAME)
                 .password(USER_PASSWORD)
                 .createdAt(LocalDateTime.now())
-                .token(USER_TOKEN)
                 .build();
 
         this.log = logRepository.save(Log.builder()

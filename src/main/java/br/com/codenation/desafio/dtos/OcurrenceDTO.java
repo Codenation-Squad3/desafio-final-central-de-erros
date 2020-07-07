@@ -3,6 +3,9 @@ package br.com.codenation.desafio.dtos;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import br.com.codenation.desafio.enums.Environment;
 import br.com.codenation.desafio.enums.Level;
 import br.com.codenation.desafio.enums.Status;
@@ -19,18 +22,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OcurrenceDTO {
 
+	private UUID id;
 
-    private UUID id;
+	private Log log;
 
-    private Log log;
+	private LocalDateTime dtCreated;
  
-    private LocalDateTime dtCreated;
+	private Environment environment;
  
-    private Environment environment;
- 
-    private Level level;
+	private Level level;
   
-    private Status status;
+	private Status status;
 
-    private User user;
+	private User user;
 }

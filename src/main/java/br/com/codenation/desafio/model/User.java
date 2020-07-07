@@ -38,33 +38,32 @@ import lombok.NoArgsConstructor;
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 	
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    private UUID id;
+	@Id
+	@GeneratedValue(generator = "uuid2")
+	@GenericGenerator(name = "uuid2", strategy = "uuid2")
+	private UUID id;
 	
-    @NotNull
-    @Size(min = 3, max = 120)
-    private String nome;
+	@NotNull
+	@Size(min = 3, max = 120)
+	private String nome;
 	
-    @NotNull
-    @Email
-    @Column(unique = true)
-    @Size(min = 5, max = 60)
-    private String email;
+	@NotNull
+	@Email
+	@Column(unique = true)
+	@Size(min = 5, max = 60)
+	private String email;
 
-    @NotNull
-    private String password;
-	
-    private String token;
+	@NotNull
+	private String password;
 
-    @JsonIgnore
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    @Column(name ="user_id")
+	@Column(name ="user_id")
 	private List<Log> logs;
 	
 	@NotNull
 	@CreatedDate
+	@Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime createdAt;
 	
 }
