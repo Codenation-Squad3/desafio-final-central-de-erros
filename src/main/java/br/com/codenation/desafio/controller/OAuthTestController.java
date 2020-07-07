@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OAuthTestController {
 
-    @GetMapping("/oauthtest")
-    public String oauthtest(){
-        return "Somente mostrado se usuário estiver logado.";
-    }
+	@GetMapping("/oauthtest")
+	public String oauthtest(){
+		return "Somente mostrado se usuário estiver logado.";
+	}
 
 }
