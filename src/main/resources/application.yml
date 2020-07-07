@@ -9,5 +9,12 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
     generate-ddl: true
     hibernate.ddl-auto: update
-   
 
+authorization:
+  email: ${AUTH_ADMIN_USER:admin@admin.com}
+  password: ${AUTH_ADMIN_PASSWORD:admin}
+  client:
+    id: ${AUTH_CLIENT_ID:client-id}
+    secret: ${AUTH_CLIENT_SECRET:client-secret}
+    grant-types: ${AUTH_CLIENT_GRANT_TYPES:password, authorization_code, refresh_token, implicit}
+    scopes: ${AUTH_CLIENT_SCOPES:read, write, trust}
