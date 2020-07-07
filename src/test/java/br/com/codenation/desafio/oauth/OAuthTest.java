@@ -1,7 +1,6 @@
 package br.com.codenation.desafio.oauth;
 
 import br.com.codenation.desafio.config.AuthenticationServerConfiguration;
-import br.com.codenation.desafio.constants.OAuthClient;
 import br.com.codenation.desafio.model.User;
 import br.com.codenation.desafio.repository.UserRepository;
 import org.junit.Before;
@@ -34,17 +33,15 @@ public class OAuthTest {
 
     @Autowired
     private WebApplicationContext context;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private AuthenticationServerConfiguration authenticationServerConfiguration;
-
-    private MockMvc mockMvc;
-
     private final String userEmail = "oauth@teste.com";
     private final String userPassword = "password";
+    public static final String CLIENT_ID = "client-id";
+    public static final String CLIENT_SECRET = "client-secret";
+    private MockMvc mockMvc;
 
     @Before
     public void setup() {
@@ -85,7 +82,7 @@ public class OAuthTest {
 
     private String obtainAccessToken() throws Exception {
         String encodedCredentials = Base64.getEncoder().encodeToString(
-                (OAuthClient.clientId + ":" + OAuthClient.clientSecret).getBytes());
+                (CLIENT_ID + ":" + CLIENT_SECRET).getBytes());
         String authorizationHeader = "Basic " + encodedCredentials;
 
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders
