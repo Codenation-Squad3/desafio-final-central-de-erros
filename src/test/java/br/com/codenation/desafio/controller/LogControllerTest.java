@@ -8,6 +8,8 @@ import br.com.codenation.desafio.enums.Status;
 import br.com.codenation.desafio.model.Log;
 import br.com.codenation.desafio.model.User;
 import br.com.codenation.desafio.repository.LogRepository;
+import br.com.codenation.desafio.request.LogRequest;
+import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,18 +28,19 @@ import javax.transaction.Transactional;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.util.Base64;
+import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LogControllerTest {
 
     public static final String LOG_TITLE = "Log Title 1";
+    public static final String LOG_TITLE_2 = "Log Title 2";
     public static final String LOG_DESCRIPTION = "Description 1";
     public static final String LOG_ORIGIN = "Api test";
     public static final Environment LOG_ENVIRONMENT = Environment.PRODUCTION;
@@ -52,25 +55,25 @@ public class LogControllerTest {
 
     private Log log;
     private MockMvc mockMvc;
+    private User user;
+    private String accessToken;
 
     @Autowired
     private WebApplicationContext context;
-
     @Autowired
     private LogRepository logRepository;
-    
     @Autowired
     private AuthenticationServerConfiguration authenticationServerConfiguration;
 
+
     @Before
-    @Transactional
-    public void setup() {
+    public void setup() throws Exception {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
 
-        User user = User.builder()
+        this.user = User.builder()
                 .email(USER_EMAIL)
                 .nome(USER_NAME)
                 .password(authenticationServerConfiguration.passwordEncoder().encode(USER_PASSWORD))
@@ -88,16 +91,19 @@ public class LogControllerTest {
                 .level(LOG_LEVEL)
                 .user(user)
                 .build());
+
+        this.accessToken = this.obtainAccessToken();
     }
 
     @Test
+    @Transactional
     public void updateLog_changeStatus_ShouldUpdateStatusOfLog() throws Exception {
         String newStatusOfLog = Status.EXCLUDED.toString();
         String jsonBody = "'{'\"status\": \"{0}\"'}'";
         String jsonBodyFormated = MessageFormat.format(jsonBody, newStatusOfLog);
 
         mockMvc.perform(MockMvcRequestBuilders.patch("/logs/" + this.log.getId())
-        		.header("Authorization", "Bearer " + obtainAccessToken())
+        		.header("Authorization", "Bearer " + this.accessToken)
                 .contentType(PatchMediaType.APPLICATION_MERGE_PATCH)
                 .content(jsonBodyFormated))
                 .andExpect(status().isCreated())
@@ -108,7 +114,53 @@ public class LogControllerTest {
                 .andExpect(jsonPath("$.level", is(LOG_LEVEL.toString())))
                 .andExpect(jsonPath("$.status", is(newStatusOfLog)));
     }
-    
+
+    @Test
+    @Transactional
+    public void saveLog_CorrectInput_ShouldSaveAndResponseCreated() throws Exception {
+        LogRequest logRequest = LogRequest.builder()
+                .title(LOG_TITLE_2)
+                .description(LOG_DESCRIPTION)
+                .origin(LOG_ORIGIN)
+                .environment(Environment.DEVELOPMENT)
+                .status(Status.ACTIVE)
+                .level(Level.WARNING)
+                .userId(user.getId())
+                .build();
+        String requestBody = new Gson().toJson(logRequest);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/logs/")
+                .header("Authorization", "Bearer " + this.accessToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
+                .andExpect(status().isCreated());
+
+        assertThat(logRepository.count(), is(2L));
+    }
+
+    @Test
+    @Transactional
+    public void saveLog_IncorrectUserIdAtRequest_ShouldResponseNotFound() throws Exception {
+        LogRequest logRequest = LogRequest.builder()
+                .title(LOG_TITLE_2)
+                .description(LOG_DESCRIPTION)
+                .origin(LOG_ORIGIN)
+                .environment(Environment.DEVELOPMENT)
+                .status(Status.ACTIVE)
+                .level(Level.WARNING)
+                .userId(UUID.randomUUID())
+                .build();
+        String requestBody = new Gson().toJson(logRequest);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/logs/")
+                .header("Authorization", "Bearer " + this.accessToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message", is("User not found")));
+
+        assertThat(logRepository.count(), is(1L));
+    }
     
     private String obtainAccessToken() throws Exception {
         String encodedCredentials = Base64.getEncoder().encodeToString(
