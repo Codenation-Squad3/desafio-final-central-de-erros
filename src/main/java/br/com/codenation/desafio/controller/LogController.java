@@ -22,8 +22,13 @@ import br.com.codenation.desafio.model.Log;
 import br.com.codenation.desafio.request.LogRequest;
 import br.com.codenation.desafio.service.LogService;
 import br.com.codenation.desafio.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 
+@Api(tags="Api: Log operations")
 @RestController
 @RequestMapping("/logs")
 @AllArgsConstructor
@@ -33,6 +38,12 @@ public class LogController {
     
     private UserService userService;
 
+    @ApiOperation(
+        value = "Find logs provided by a user search criteria",
+        notes = "When search criteria don't include any parameters, it will return the last logs sorted by date/time")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Found logs")
+    })
     @GetMapping("/search")
     public Page<Log> findByExample(@RequestBody Log logExample,
                                    @RequestParam(name = "page" , defaultValue = "0") Integer page,
@@ -42,11 +53,21 @@ public class LogController {
         return service.findByExample(logExample,page,sortTarget,sortDirection);
     }
 
+    @ApiOperation(value = "Returns the last logs")
+    @ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Found logs")
+    })
     @GetMapping
     public Page<Log> findAll(){
         return service.findAll();
     }
 
+    @ApiOperation(value="Save a new log")
+   	@ApiResponses (value = {
+   	    @ApiResponse(code = 201, message = "Log successfully created"),
+   	    @ApiResponse(code = 404, message = "User not found"),
+   	    @ApiResponse(code = 400, message = "Invalid LogRequest body")
+   	})
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     private Log save(@RequestBody @Valid LogRequest log){
@@ -56,6 +77,12 @@ public class LogController {
         return  service.save(log);
     }
 
+    @ApiOperation(value="Update a existing log")
+   	@ApiResponses (value = {
+   	    @ApiResponse(code = 201, message = "Log successfully updated"),
+   	    @ApiResponse(code = 404, message = "User not found"),
+   	    @ApiResponse(code = 400, message = "Invalid JsonMergePatch body")
+   	})
     @PatchMapping(path = "/{id}", consumes = PatchMediaType.APPLICATION_MERGE_PATCH_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     public Log update(@PathVariable String id, @RequestBody JsonMergePatch mergePatchDocument) {

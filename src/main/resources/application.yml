@@ -20,8 +20,8 @@ authorization:
     scopes: ${AUTH_CLIENT_SCOPES:read, write, trust}
 
 swagger:
-  title: Backend squad3
-  description: Api rest Logs
+  title: Error Log Api - Backend squad3
+  description: Central de erros é uma api REST para centralizar logs e permitir sua categorização e busca
   version: 0.0.1
   package: br.com.codenation.desafio.controller
   url: ${SWAGGER_URL:http://localhost:8080/oauth/token}
