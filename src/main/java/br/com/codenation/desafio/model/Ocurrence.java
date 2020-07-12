@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 @Validated
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "occurrences")
+@Table(name = "occurrence")
 public class Ocurrence {
 
     @Id
@@ -46,10 +46,10 @@ public class Ocurrence {
 
     @Column
     @NotNull
-    private LocalDateTime dtCreated;
+    private LocalDateTime created_at;
 
     @NotNull
     @OneToOne
     private User user;
-    
+
 }
