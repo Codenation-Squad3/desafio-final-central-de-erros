@@ -81,7 +81,7 @@ public class LogRepositoryTest {
 	private Ocurrence createOcurrence(Log log, User user) {
 		
 		Ocurrence ocurrence = Ocurrence.builder()
-				.dtCreated(LocalDateTime.now())
+				.created_at(LocalDateTime.now())
 				.user(user)
 				.log(log)
 				.build();
