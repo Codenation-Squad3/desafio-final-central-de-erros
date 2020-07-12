@@ -26,9 +26,42 @@ Central de erros é uma api REST para centralizar logs e permitir sua categoriza
 
 #### Banco de dados
 
-O banco de dados em desenvolvimento roda em memória com o banco H2. Segue abaixo o script para criar uma imagem docker do banco de dados Postgresql:
+As entidades do banco de dados são o Log, User e Ocurrence. O diagrama abaixo mostra as relações entre si.
+
+![Diagrama_Banco_De_Dados](https://i.ibb.co/j3ZKSnJ/Anota-o-2020-07-12-130537.png)
+
+Sendo os valores dos Enum:
+
+```
+Enum status {
+  ARCHIVED
+  ACTIVE
+  EXCLUDED
+}
+
+Enum environment {
+  PRODUCTION
+  TEST
+  DEVELOPMENT
+}
+
+Enum level {
+  ERROR
+  WARNING
+  DEBUG
+}
+```
+
+O diagrama pode ser encontrado clicando [aqui](https://dbdiagram.io/d/5f0b37470425da461f048ff3).
+
 
 #### Docker
+
+O banco de dados local roda utilizando o postgresql e os testes em h2.
+
+Para facilitar o uso, foi feito um `docker-compose` para levantar o banco de dados e o pgAdmin.
+
+
 [arquivo de compose do docker](https://github.com/Codenation-Squad3/desafio-final-central-de-erros/blob/master/docker-compose.yml)
 | Step                       | Command                         |
 | ---------------------------|:-------------------------------:|
