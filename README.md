@@ -2,6 +2,10 @@
 
 Central de erros é uma api REST para centralizar logs e permitir sua categorização e busca. Foi desenvolvido em 2020 junto ao curso da Codenation Java em parceria com a CI&T. Os conhecimentos aprendidos durante as aulas foram testados e aplicados neste projeto.
 
+O foco era no backend mas, foi criado também um frontend para facilitar a visualização e apresentação. Não conseguimos o finalizar por completo mas é interessante vizuzalisar como ficaria o produto final. 
+
+<a  href="https://github.com/Neemias-S/Desafio-Final-Central-de-Erros-Front" target="_blank">Repositório Frontend</a>
+
 ## Descrição
 
 **Objetivo:** Desenvolvimento de aplicação REST para cadastro e busca por logs.
