@@ -3,6 +3,7 @@ package br.com.codenation.desafio.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDateTime;
 
 import javax.json.JsonMergePatch;
 
@@ -50,13 +51,14 @@ public class LogService implements LogServiceInterface{
 				.build();
 	}
 
-
 	public Log save(LogRequest logRequest) {
 
 		Optional<Log> existingLog = this.toLog(logRequest);
 
 		if(existingLog.isPresent()){
-			ocurrenceRepository.save(this.LogRequestToOccurrence(logRequest, existingLog.get().getId()));
+			Log log = existingLog.get();
+			logRequest.setLastOccurrence(log.getLastOccurrence());
+			ocurrenceRepository.save(this.LogRequestToOccurrence(logRequest, log.getId()));
 		}
 		else{
 			return logRepository.save(
@@ -67,6 +69,7 @@ public class LogService implements LogServiceInterface{
 					.origin(logRequest.getOrigin())
 					.status(logRequest.getStatus())
 					.title(logRequest.getTitle())
+					.lastOccurrence(LocalDateTime.now())
 					.user(userRepository.findById(logRequest.getUserId()).get())
 					.occurrences(new ArrayList<>()).build()
 					);

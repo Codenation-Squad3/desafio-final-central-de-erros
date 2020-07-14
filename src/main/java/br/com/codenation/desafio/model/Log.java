@@ -15,6 +15,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.validation.annotation.Validated;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -61,7 +62,7 @@ public class Log {
 	private String description;
 
 	@CreatedDate
-	@Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	@NotNull
 	private LocalDateTime lastOccurrence;
 
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -69,6 +70,7 @@ public class Log {
 	private List<Ocurrence> occurrences;
 
 	@NotNull
+	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private User user;
 

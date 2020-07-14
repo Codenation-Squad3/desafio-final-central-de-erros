@@ -38,7 +38,7 @@ public class LogTest {
         Set<ConstraintViolation<Log>> constraintViolations = validator
                 .validate(log);
 
-        assertEquals(7, constraintViolations.size());
+        assertEquals(8, constraintViolations.size());
     }
 
     @Test
