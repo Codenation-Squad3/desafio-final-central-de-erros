@@ -1,14 +1,10 @@
 package br.com.codenation.desafio.repository;
 
-import java.util.Optional;
-import java.util.UUID;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import br.com.codenation.desafio.model.Log;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.codenation.desafio.model.Log;
+import java.util.Optional;
 
 @Repository
 public interface LogRepository extends JpaRepository<Log, String> {
