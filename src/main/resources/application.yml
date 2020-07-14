@@ -16,7 +16,7 @@ spring:
      user: ${DATABASE_USER:postgres}
      password: ${DATABASE_PASSWORD:postgres}
      schemas: codenation
-     url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/squad3}
+     #url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/squad3}
      locations: classpath:db/migration
 
 authorization:
