@@ -19,7 +19,7 @@ import java.util.UUID;
 @Validated
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "occurrence")
+@Table(name = "occurrences")
 public class Ocurrence {
 
     @Id
@@ -31,11 +31,11 @@ public class Ocurrence {
     @ManyToOne
     private Log log;
 
-    @Column
-    @NotNull
+    @Column(name = "dt_created", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime created_at;
 
     @NotNull
+	@JsonIgnore
     @OneToOne
     private User user;
 
