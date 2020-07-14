@@ -5,6 +5,7 @@ Central de erros é uma api REST para centralizar logs e permitir sua categoriza
 O foco era no backend mas, foi criado também um frontend para facilitar a visualização e apresentação. Não conseguimos o finalizar por completo mas é interessante vizuzalisar como ficaria o produto final. 
 
 <a  href="https://github.com/Neemias-S/Desafio-Final-Central-de-Erros-Front" target="_blank">Repositório Frontend</a>
+<br>
 <a  href="https://www.figma.com/proto/UHT7ovuTYnRYAykaZrW0VT/CetralDeErros?node-id=107%3A2&scaling=min-zoom" target="_blank">Wireframe</a>
 
 ## Descrição
