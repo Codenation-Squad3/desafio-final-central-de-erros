@@ -16,7 +16,7 @@ spring:
      user: ${DATABASE_USER:postgres}
      password: ${DATABASE_PASSWORD:postgres}
      schemas: codenation
-     url: ${DATABASE_FLYWAY:jdbc:postgresql://localhost:5432/squad3}
+     #url: ${DATABASE_FLYWAY:jdbc:postgresql://localhost:5432/squad3}
      locations: classpath:db/migration
 
 authorization:
@@ -34,5 +34,3 @@ swagger:
   version: 0.0.1
   package: br.com.codenation.desafio.controller
   url: ${SWAGGER_URL:http://localhost:8080/oauth/token}
-  
-  postgres://jlhmpsfxouquln:388116c94c9b0f37c95b02aacae46dfb1d8f1d8b40a00085dd0782796a5dd675@ec2-18-210-214-86.compute-1.amazonaws.com:5432/d38f782c80s7or
