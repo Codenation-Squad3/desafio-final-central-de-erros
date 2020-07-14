@@ -106,6 +106,3 @@ Após estes passos é commitado o desenvolvimento na branch master.
 
 Para Continuous Integration foi utilizado o Github Actions para efetuar o build e testes automáticos, assim validar a pull request antes de review e merge com a branch master.
 Cada commit na branch master é feito o deploy automático no Heroku,
-
-## Stories do usuário
-[planilha](https://docs.google.com/spreadsheets/d/1uAfXOJKlHbWOtik5yWVzqu_JeFT1DIN1sJ4ihf19YlM/edit#gid=0)
