@@ -34,19 +34,19 @@ import lombok.NoArgsConstructor;
 @Validated
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="users")
+@Table(name="user")
 @EntityListeners(AuditingEntityListener.class)
 public class User {
-	
+
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private UUID id;
-	
+
     @NotNull
     @Size(min = 3, max = 120)
     private String nome;
-	
+
     @NotNull
     @Email
     @Column(unique = true)
@@ -55,17 +55,17 @@ public class User {
 
     @NotNull
     private String password;
-	
+
     private String token;
 
     @JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @Column(name ="user_id")
 	private List<Log> logs;
-	
+
 	@NotNull
 	@CreatedDate
 	@Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime createdAt;
-	
+
 }

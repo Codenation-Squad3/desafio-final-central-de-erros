@@ -44,7 +44,7 @@ public class LogService implements LogServiceInterface{
 
 	public Ocurrence LogRequestToOccurrence(LogRequest logRequest, String idLog){
 		return Ocurrence.builder()
-				.dtCreated(logRequest.getLastOccurrence())
+				.created_at(logRequest.getLastOccurrence())
 				.user(userRepository.findById(logRequest.getUserId()).get())
 				.log(logRepository.findById(idLog).get())
 				.build();
