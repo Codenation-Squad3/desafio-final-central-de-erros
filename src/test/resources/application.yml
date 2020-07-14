@@ -1,16 +1,24 @@
 #debug: true
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false
     driverClassName: org.h2.Driver
-    username: ${DATABASE_USER:postgres}
-    password: ${DATABASE_PASSWORD:postgres}
+    username: sa
+    password: 
   jpa:
     show-sql: true
     database-platform: org.hibernate.dialect.H2Dialect
-    generate-ddl: true
-    hibernate.ddl-auto: create-drop
-
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        default_schema: public
+  flyway:
+     user: sa
+     password: 
+     schemas: public
+     url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false
+     locations: classpath:db/migration
 authorization:
   email: ${AUTH_ADMIN_USER:admin@admin.com}
   password: ${AUTH_ADMIN_PASSWORD:admin}

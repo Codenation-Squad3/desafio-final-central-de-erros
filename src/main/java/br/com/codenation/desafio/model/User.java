@@ -34,7 +34,7 @@ import lombok.NoArgsConstructor;
 @Validated
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="user")
+@Table(name="users")
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 
